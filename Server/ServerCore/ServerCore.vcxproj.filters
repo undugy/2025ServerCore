@@ -22,6 +22,9 @@
     <ClCompile Include="ObjectPool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="NetworkSession.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -39,5 +42,6 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkSession.h" />
   </ItemGroup>
 </Project>

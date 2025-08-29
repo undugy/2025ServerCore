@@ -24,16 +24,21 @@ bool IocpHandler::ProcessDispatch(uint32_t timeOutMs)
 
 	if (TRUE == GetQueuedCompletionStatus(mIocpHandle,&transfferedByte, &key, reinterpret_cast<LPOVERLAPPED*>(&iocpContext), timeOutMs))
 	{
+		if (iocpContext == nullptr)
+			return false;
 		std::shared_ptr<IDispatcher> dispatcher = iocpContext->mDispatcher;
+		if (iocpContext->mDispatcher == nullptr)
+			return false;
 		dispatcher->Dispatch(iocpContext, transfferedByte);
 	}
 	else
 	{
-		int32_t errorCode = ::WSAGetLastError();
+		int32_t errorCode = WSAGetLastError();
 		switch (errorCode)
 		{
 		case WAIT_TIMEOUT:
 			return false;
+		case ERROR_NETNAME_DELETED:
 		default:
 		{
 			std::shared_ptr<IDispatcher> dispatcher = iocpContext->mDispatcher;

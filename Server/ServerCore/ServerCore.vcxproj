@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(SolutionDir)Include\modycamel\</ExternalIncludePath>
     <LibraryPath>$(SolutionDir)Libs\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Libs\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(SolutionDir)Include\;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(SolutionDir)Include\modycamel\</ExternalIncludePath>
     <LibraryPath>$(SolutionDir)Libs\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Libs\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -147,12 +147,14 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
   <ItemGroup>
     <ClCompile Include="IocpContext.cpp" />
     <ClCompile Include="IocpHandler.cpp" />
+    <ClCompile Include="NetworkSession.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
+    <ClInclude Include="NetworkSession.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RefSingleton.h" />

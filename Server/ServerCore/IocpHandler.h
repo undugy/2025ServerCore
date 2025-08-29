@@ -3,7 +3,7 @@ class IDispatcher : public std::enable_shared_from_this<IDispatcher>
 {
 public:
 	virtual HANDLE GetHandle() = 0;
-	virtual void Dispatch(class IocpContext* iocpEvent, int32_t numOfBytes = 0) = 0;
+	virtual void Dispatch(class IocpContext* iocpContext, int32_t numOfBytes = 0) = 0;
 };
 
 class IocpHandler
