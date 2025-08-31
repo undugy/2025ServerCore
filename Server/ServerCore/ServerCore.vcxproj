@@ -147,17 +147,25 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
   <ItemGroup>
     <ClCompile Include="IocpContext.cpp" />
     <ClCompile Include="IocpHandler.cpp" />
+    <ClCompile Include="NetworkBuffer.cpp" />
     <ClCompile Include="NetworkSession.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="RegisteredBufferPool.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="SocketUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
+    <ClInclude Include="NetworkBuffer.h" />
     <ClInclude Include="NetworkSession.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RefSingleton.h" />
+    <ClInclude Include="RegisteredBufferPool.h" />
+    <ClInclude Include="Service.h" />
+    <ClInclude Include="SocketUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,6 +8,15 @@
     <Filter Include="Network">
       <UniqueIdentifier>{63294a44-e9cd-4029-9c34-6059e4f0ff98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Session">
+      <UniqueIdentifier>{4af92a0f-28b5-4923-9baa-37dc8bb48b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{450ebc00-c045-4ac9-b888-6f95b7b49a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{295e8a21-f008-4e03-b39f-13cd65d170b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -19,10 +28,22 @@
     <ClCompile Include="IocpHandler.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectPool.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="NetworkSession.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUtil.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkBuffer.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisteredBufferPool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,12 +57,24 @@
     <ClInclude Include="IocpContext.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="RefSingleton.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="NetworkSession.h">
+      <Filter>Session</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
-      <Filter>소스 파일</Filter>
+      <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkSession.h" />
+    <ClInclude Include="RefSingleton.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketUtil.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkBuffer.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisteredBufferPool.h" />
   </ItemGroup>
 </Project>
