@@ -24,6 +24,14 @@
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "mimalloc.dll.lib")
-#include"ObjectPool.h"
+
+#pragma comment(lib, "Poco\\PocoDatamd.lib")
+#pragma comment(lib, "Poco\\PocoDataODBCmd.lib")
+#pragma comment(lib, "Poco\\PocoFoundationmd.lib")
+
 #include<modycamel/concurrentqueue.h>
+
+#include"ObjectPool.h"
+#include "LogManager.h"
+#include "PocoTimeUtil.h"
 #endif //PCH_H

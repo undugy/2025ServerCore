@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(SolutionDir)Include\modycamel\</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(SolutionDir)Include\modycamel\;$(SolutionDir)Include\spdlog\;$(SolutionDir)Include\Poco\</ExternalIncludePath>
     <LibraryPath>$(SolutionDir)Libs\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Libs\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -147,16 +147,20 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
   <ItemGroup>
     <ClCompile Include="IocpContext.cpp" />
     <ClCompile Include="IocpHandler.cpp" />
+    <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="NetworkSession.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PocoTimeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
+    <ClInclude Include="LogManager.h" />
     <ClInclude Include="NetworkSession.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PocoTimeUtil.h" />
     <ClInclude Include="RefSingleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
