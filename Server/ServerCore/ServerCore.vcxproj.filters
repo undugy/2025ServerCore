@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{63294a44-e9cd-4029-9c34-6059e4f0ff98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{e2ce5ae2-fbf6-40b7-ad88-b2026b3d9356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{a2ee31e3-c610-4ab8-9526-2626353cd8fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Session">
       <UniqueIdentifier>{4af92a0f-28b5-4923-9baa-37dc8bb48b74}</UniqueIdentifier>
@@ -19,14 +21,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="IocpContext.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="IocpHandler.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="PocoTimeUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="LogManager.cpp">
+      <Filter>Log</Filter>
     </ClCompile>
     <ClCompile Include="NetworkSession.cpp">
       <Filter>Session</Filter>
@@ -43,18 +48,30 @@
     <ClCompile Include="NetworkBuffer.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
+    <ClCompile Include="NetworkSession.cpp">
+      <Filter>Network</Filter>
     <ClCompile Include="RegisteredBufferPool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="IocpHandler.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="IocpContext.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="PocoTimeUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="LogManager.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkSession.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="NetworkSession.h">
@@ -64,6 +81,7 @@
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="RefSingleton.h">
+      <Filter>Util</Filter>
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Service.h">
@@ -72,6 +90,9 @@
     <ClInclude Include="SocketUtil.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="LogMacro.h">
+      <Filter>Log</Filter>
     <ClInclude Include="NetworkBuffer.h">
       <Filter>Memory</Filter>
     </ClInclude>
