@@ -156,6 +156,7 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
   <ItemGroup>
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
+    <ClInclude Include="LogMacro.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="NetworkSession.h" />
     <ClInclude Include="ObjectPool.h" />

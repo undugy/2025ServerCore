@@ -12,9 +12,11 @@ LogManager::~LogManager()
 	LogStruct log;
 	while (_logs.try_pop(log) == false)
 	{
-		LogStruct p = logQueue.front();
-		Write(p.time, p.lv, p.log);
-		logQueue.pop();
+		View(log.time, log.lv, log.log);
+		if (log.write)
+		{
+			Write(log.time, log.lv, log.log);
+		}
 	}
 }
 

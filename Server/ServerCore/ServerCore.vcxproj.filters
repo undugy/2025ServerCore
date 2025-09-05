@@ -55,5 +55,8 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="LogMacro.h">
+      <Filter>Log</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
