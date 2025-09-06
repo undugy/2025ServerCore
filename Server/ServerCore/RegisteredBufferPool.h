@@ -2,55 +2,74 @@
 #include<atomic>
 #include"SocketUtil.h"
 #include"RefSingleton.h"
+#include"NetworkBuffer.h"
 constexpr bool USE_LARGE_PAGES = false; 
-class NetworkBuffer;
-template <size_t PS, size_t S>
-class RegisteredBufferPool :public RefSingleton<RegisteredBufferPool>
+
+template <typename TV, typename TM>
+inline TV RoundDown(TV Value, TM Multiple)
 {
-	moodycamel::ConcurrentQueue<NetworkBuffer*> mFreeQueue;
-	BYTE* mBuffer = nullptr;
-	std::recursive_mutex mLock;
+	return((Value / Multiple) * Multiple);
+}
+
+template <typename TV, typename TM>
+inline TV RoundUp(TV Value, TM Multiple)
+{
+	return(RoundDown(Value, Multiple) + (((Value % Multiple) > 0) ? Multiple : 0));
+}
+
+template<size_t BS>
+class RegisteredBufferPool :public RefSingleton<RegisteredBufferPool<BS>>
+{
+	moodycamel::ConcurrentQueue<NetworkBuffer*> mQueue;
+
 	std::atomic_int mAllocCount = 0;
 	std::atomic_int mUseCount = 0;
+
+	uint32_t mSize = 0;//ÃÑ °³¼ö
 public:
 	RegisteredBufferPool() = default;
 	~RegisteredBufferPool()
 	{
-		std::lock_guard<std::recursive_mutex> guard(mLock);
-		while (!mPool.empty())
+		NetworkBuffer* ptr = nullptr;
+		while (!mQueue.try_dequeue(ptr))
 		{
-			void* ptr = mPool.top();
 			if (ptr != nullptr)
+			{
+				ptr->Release();
 				mi_free(ptr);
-			mPool.pop();
+			}
 		}
 	}
 	
-	void Initialize() override
+	void Initialize(uint32_t size)
 	{
+		mSize = size;
+
 		DWORD totalBuffersAllocated = 0;
-		while (totalBuffersAllocated < PS)
+		while (totalBuffersAllocated < mSize)
 		{
 			DWORD bufferSize = 0;
 			DWORD receiveBuffersAllocated = 0;
 
-			BYTE* pBuffer = AllocateBufferSpace(S, PS, bufferSize, receiveBuffersAllocated);
-
-			totalBuffersAllocated += receiveBuffersAllocated;
+			CHAR* pBuffer = AllocateBufferSpace(BS, mSize, bufferSize, receiveBuffersAllocated);
 
 
 			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
 			if (id == RIO_INVALID_BUFFERID)
 			{
-				//·Î±ë
+				VIEW_ERROR("RegisteredBufferPool RIORegisterBuffer Failed");
+				VirtualFreeEx(GetCurrentProcess(), pBuffer, 0, MEM_RELEASE);
+				continue;
 			}
 
-			mFreeQueue.enqueue(AllocBuffer(id, pBuffer, S));
+			mQueue.enqueue(AllocBuffer(id, (BYTE*)pBuffer, BS));
 			mAllocCount.fetch_add(1);
-			//if (totalBuffersAllocated != pendingRecvs)
-			//{
-			//	//·Î±ë
-			//}
+			if (bufferSize != mPendingSize)
+			{
+				VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, mPendingSize: %d", bufferSize, mPendingSize);
+			}
+
+			totalBuffersAllocated += receiveBuffersAllocated;
 		}
 
 
@@ -75,7 +94,7 @@ public:
 			DWORD bufferSize = 0;
 			DWORD receiveBuffersAllocated = 0;
 
-			BYTE* pBuffer = AllocateBufferSpace(S, size, bufferSize, receiveBuffersAllocated);
+			BYTE* pBuffer = AllocateBufferSpace(BS, size, bufferSize, receiveBuffersAllocated);
 
 			totalBuffersAllocated += receiveBuffersAllocated;
 
@@ -86,34 +105,34 @@ public:
 				//·Î±ë
 			}
 
-			mFreeQueue.enqueue(AllocBuffer(id, pBuffer, S));
+			mQueue.enqueue(AllocBuffer(id, pBuffer, BS));
 			mAllocCount.fetch_add(1);
 
 		}
 	}
-	template <typename... Args>
-	std::shared_ptr<T> Acquire(Args... args)
+	
+	std::shared_ptr<NetworkBuffer> Acquire()
 	{
 		NetworkBuffer* pNetBuff = nullptr;
 		if (GetFreeCount() <= 0)
 		{
 			DWORD bufferSize = 0;
 			DWORD receiveBuffersAllocated = 0;
-			BYTE* pBuffer = AllocateBufferSpace(S, 1, bufferSize, receiveBuffersAllocated);
+			BYTE* pBuffer = AllocateBufferSpace(BS, 1, bufferSize, receiveBuffersAllocated);
 			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
 			if (id == RIO_INVALID_BUFFERID)
 			{
 				//·Î±ë
-				return nullptr
+				return nullptr;
 			}
-			pNetBuff = AllocBuffer(id, pBuffer, S));
+			pNetBuff = AllocBuffer(id, pBuffer, BS);
 			mAllocCount.fetch_add(1);
 			mUseCount.fetch_add(1);
 
 		}
 		else
 		{
-			while (false == queue.try_dequeue(pNetBuff)) {};
+			while (false == mQueue.try_dequeue(pNetBuff)) {};
 			mUseCount.fetch_add(1);
 		}
 
@@ -128,7 +147,7 @@ public:
 		return ptr;
 	}
 
-	inline BYTE* AllocateBufferSpace(
+	inline CHAR* AllocateBufferSpace(
 		const DWORD pendigBufferSize,
 		const DWORD pendingRecvs,
 		DWORD& bufferSize,
@@ -159,13 +178,13 @@ public:
 
 		bufferSize = static_cast<DWORD>(actualSize);
 
-		BYTE* pBuffer = reinterpret_cast<BYTE*>(VirtualAllocExNuma(GetCurrentProcess(), 0, bufferSize, MEM_COMMIT | MEM_RESERVE | (largePageMinimum != 0 ? MEM_LARGE_PAGES : 0), PAGE_READWRITE, preferredNumaNode));
+		CHAR* pBuffer = reinterpret_cast<CHAR*>(VirtualAllocExNuma(GetCurrentProcess(), 0, bufferSize, MEM_COMMIT | MEM_RESERVE | (largePageMinimum != 0 ? MEM_LARGE_PAGES : 0), PAGE_READWRITE, preferredNumaNode));
 
 
 		return pBuffer;
 	}
 
-	inline BYTE* AllocateBufferSpace(
+	inline CHAR* AllocateBufferSpace(
 		const DWORD recvBufferSize,
 		const DWORD pendingRecvs,
 		DWORD& receiveBuffersAllocated)
@@ -178,33 +197,22 @@ public:
 
 
 private:
-	void Release(T* obj)
+	void Release(NetworkBuffer* obj)
 	{
 		if (obj != nullptr)
 		{
-			obj->~T();
-			mFreeQueue.enqueue(obj);
+			obj->Reset();
+			mQueue.enqueue(obj);
 			mUseCount.fetch_sub(1);
 		}
 	}
 
 	template <typename... Args>
-	NetworkBuffer * AllocBuffer(Args... args) {
-		NetworkBuffer* raw = static_cast<NetworkBuffer*>(mi_malloc(sizeof(T)));
+	NetworkBuffer * AllocBuffer(Args&&... args) {
+		NetworkBuffer* raw = static_cast<NetworkBuffer*>(mi_malloc(sizeof(NetworkBuffer)));
 		if (!raw) throw std::bad_alloc();
-		new (raw) T(std::forward<Args>(args)...);
+		new (raw) NetworkBuffer(std::forward<Args>(args)...);
 		return raw;
 	}
 };
 
-template <typename TV, typename TM>
-inline TV RoundDown(TV Value, TM Multiple)
-{
-	return((Value / Multiple) * Multiple);
-}
-
-template <typename TV, typename TM>
-inline TV RoundUp(TV Value, TM Multiple)
-{
-	return(RoundDown(Value, Multiple) + (((Value % Multiple) > 0) ? Multiple : 0));
-}

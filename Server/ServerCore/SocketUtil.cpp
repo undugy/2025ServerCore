@@ -56,13 +56,14 @@ bool SocketUtil::Init()
 #ifdef VERSION_RIO
 	GUID guid = WSAID_MULTIPLE_RIO;
 	DWORD bytes = 0;
-	if(WSAIoctl(dummySocket, SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), (void**)&RIOEFTable, sizeof(RIOEFTable), OUT & bytes, NULL, NULL) != SOCKET_ERROR))
+	if(WSAIoctl(dummySocket, SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), (void**)&RIOEFTable, sizeof(RIOEFTable), OUT & bytes, NULL, NULL) != SOCKET_ERROR)
 	{
 		Close(dummySocket);
 		return false;
 	}
 #endif
 	Close(dummySocket);
+	return true;
 }
 void SocketUtil::Clear()
 {
