@@ -145,32 +145,68 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConnectService.cpp" />
+    <ClCompile Include="DBHandler.cpp" />
+    <ClCompile Include="DBLoadBalancer.cpp" />
+    <ClCompile Include="DBService.cpp" />
     <ClCompile Include="IocpContext.cpp" />
     <ClCompile Include="IocpHandler.cpp" />
+    <ClCompile Include="Job.cpp" />
+    <ClCompile Include="JobQueue.cpp" />
+    <ClCompile Include="JobTimer.cpp" />
+    <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="ListenerService.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="NetworkBuffer.cpp" />
     <ClCompile Include="NetworkSession.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
+    <ClCompile Include="PacketChunk.cpp" />
+    <ClCompile Include="PacketHandler.cpp" />
+    <ClCompile Include="PacketManager.cpp" />
+    <ClCompile Include="PacketSession.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="RegisteredBufferPool.cpp" />
+    <ClCompile Include="RegisteredBufferPool.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Packet.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="SocketUtil.cpp" />
     <ClCompile Include="PocoTimeUtil.cpp" />
+    <ClCompile Include="ThreadLocal.cpp" />
+    <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConnectService.h" />
+    <ClInclude Include="DBHandler.h" />
+    <ClInclude Include="DBLoadBalancer.h" />
+    <ClInclude Include="DBService.h" />
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="JobQueue.h" />
+    <ClInclude Include="JobTimer.h" />
+    <ClInclude Include="Listener.h" />
+    <ClInclude Include="ListenerService.h" />
     <ClInclude Include="LogMacro.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="NetworkBuffer.h" />
     <ClInclude Include="NetworkSession.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="PacketChunk.h" />
+    <ClInclude Include="PacketHandler.h" />
+    <ClInclude Include="PacketManager.h" />
+    <ClInclude Include="PacketSession.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PocoTimeUtil.h" />
     <ClInclude Include="RefSingleton.h" />
-    <ClInclude Include="RegisteredBufferPool.h" />
+    <ClInclude Include="RegisteredBufferPool.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Packet.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="SocketUtil.h" />
+    <ClInclude Include="ThreadLocal.h" />
+    <ClInclude Include="ThreadManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

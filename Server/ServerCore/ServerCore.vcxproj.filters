@@ -1,101 +1,199 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Network">
-      <UniqueIdentifier>{63294a44-e9cd-4029-9c34-6059e4f0ff98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util">
-      <UniqueIdentifier>{e2ce5ae2-fbf6-40b7-ad88-b2026b3d9356}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Log">
-      <UniqueIdentifier>{a2ee31e3-c610-4ab8-9526-2626353cd8fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Session">
-      <UniqueIdentifier>{4af92a0f-28b5-4923-9baa-37dc8bb48b74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Memory">
-      <UniqueIdentifier>{450ebc00-c045-4ac9-b888-6f95b7b49a9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{295e8a21-f008-4e03-b39f-13cd65d170b0}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="IocpContext.cpp">
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="LogManager.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkBuffer.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="IocpHandler.cpp">
+    <ClCompile Include="NetworkSession.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="PocoTimeUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="LogManager.cpp">
-      <Filter>Log</Filter>
+    <ClCompile Include="SocketUtil.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkSession.cpp">
-      <Filter>Session</Filter>
+    <ClCompile Include="RegisteredBufferPool.cpp">
+      <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="ObjectPool.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
+    <ClCompile Include="IocpHandler.cpp">
+      <Filter>Iocp</Filter>
+    </ClCompile>
+    <ClCompile Include="IocpContext.cpp">
+      <Filter>Iocp</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadLocal.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
     <ClCompile Include="Service.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Packet.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketChunk.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketManager.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="SocketUtil.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkBuffer.cpp">
-      <Filter>Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkSession.cpp">
+    <ClCompile Include="PacketSession.cpp">
       <Filter>Network</Filter>
-    <ClCompile Include="RegisteredBufferPool.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ConnectService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="ListenerService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobQueue.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobTimer.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="DBHandler.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="DBLoadBalancer.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="DBService.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IocpHandler.h">
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="LogManager.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="LogMacro.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkBuffer.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="IocpContext.h">
+    <ClInclude Include="NetworkSession.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="PocoTimeUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="LogManager.h">
-      <Filter>Log</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectPool.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkSession.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkSession.h">
-      <Filter>Session</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectPool.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
     <ClInclude Include="RefSingleton.h">
       <Filter>Util</Filter>
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Service.h">
-      <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="SocketUtil.h">
-      <Filter>Utils</Filter>
+      <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="LogMacro.h">
-      <Filter>Log</Filter>
-    <ClInclude Include="NetworkBuffer.h">
+    <ClInclude Include="RegisteredBufferPool.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="RegisteredBufferPool.h" />
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpHandler.h">
+      <Filter>Iocp</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpContext.h">
+      <Filter>Iocp</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadLocal.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketChunk.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketManager.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketSession.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="ListenerService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobQueue.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobTimer.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="DBHandler.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="DBLoadBalancer.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="DBService.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Log">
+      <UniqueIdentifier>{831330e5-da60-4e9c-888b-d9ff0cac5c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{9e5f06d9-9376-4a8c-8060-931cfdc08d00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{5bc4679a-3b58-400a-ac3f-5a951f35a3c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{8d1d9f2f-1412-43c0-a023-36a015dfc4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Iocp">
+      <UniqueIdentifier>{bc88b4e9-d1da-4089-a5dd-9809a1806972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{d91ef7fd-332a-46ab-9eab-ca703590dbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Service">
+      <UniqueIdentifier>{60eff290-acf8-443c-a7e7-8d99583c8ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{c4e8869e-f2f7-4d8f-8d3f-19711332a5c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{ca03c6ab-6919-45c7-93b4-95294c0595b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Job">
+      <UniqueIdentifier>{2ebb67e0-996c-4a03-b449-0e45fede9689}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
