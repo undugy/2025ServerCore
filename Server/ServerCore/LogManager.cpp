@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "LogManager.h"
-
+#include "ThreadManager.h"
 
 LogManager::LogManager()
 {
@@ -41,7 +41,7 @@ void LogManager::Initialize(const std::string& loggerName /*= "basic_logger"*/, 
 void LogManager::Launch()
 {
 
-	_threads = std::jthread([&]() {
+	ThreadManager::GetInstance().PushThread([&]() {
 		while (true)
 		{
 			LogStruct log;
