@@ -143,12 +143,17 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc.dll" "$(OutDir)mimalloc.dll"
+copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" "$(OutDir)mimalloc-redirect.dll"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConnectService.cpp" />
     <ClCompile Include="DBHandler.cpp" />
     <ClCompile Include="DBLoadBalancer.cpp" />
     <ClCompile Include="DBService.cpp" />
+    <ClCompile Include="GlobalQueue.cpp" />
     <ClCompile Include="IocpContext.cpp" />
     <ClCompile Include="IocpHandler.cpp" />
     <ClCompile Include="Job.cpp" />
@@ -180,6 +185,7 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
     <ClInclude Include="DBHandler.h" />
     <ClInclude Include="DBLoadBalancer.h" />
     <ClInclude Include="DBService.h" />
+    <ClInclude Include="GlobalQueue.h" />
     <ClInclude Include="IocpContext.h" />
     <ClInclude Include="IocpHandler.h" />
     <ClInclude Include="Job.h" />

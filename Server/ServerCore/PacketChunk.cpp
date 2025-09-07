@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ObjectPool.h"
+#include "Packet.h"
 #include "PacketChunk.h"
 #include "PacketManager.h"
 void PacketChunk::Reset()

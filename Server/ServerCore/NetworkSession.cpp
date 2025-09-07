@@ -2,7 +2,7 @@
 #include "NetworkSession.h"
 #include "SocketUtil.h"
 #include "Service.h"
-#include "IocpContext.h"
+
 #include "RegisteredBufferPool.h"
 #include "Packet.h"
 NetworkSession::NetworkSession()
@@ -160,6 +160,7 @@ void NetworkSession::Dispatch(RIONotifyEvent* notifyEvent)
 
 	uint32_t numResult = 0;
 	{
+		std::lock_guard<std::recursive_mutex> guard(mRQLock);
 		numResult = SocketUtil::RIOEFTable.RIODequeueCompletion(notifyEvent->rioCQ, results, RIO_DISPATCH_RESULT_COUNT);
 		SocketUtil::RIOEFTable.RIONotify(notifyEvent->rioCQ);
 	}
@@ -196,7 +197,7 @@ bool NetworkSession::RegisterConnect()
 	if(GetService() == nullptr)
 		return false;
 
-	if (GetService()->GetServiceType() != ServiceType::Client)
+	if (GetService()->GetServiceType() != ServiceType::Connector)
 		return false;
 
 	if (SocketUtil::SetReuseAddress(mSocket, true) == false)
@@ -298,7 +299,8 @@ void NetworkSession::RegisterSend()
 		mRioSendContext.Offset = mSendBuffer->WriteOffset();
 		std::vector<std::shared_ptr<Packet>> swapList(BULK_DEQUEUE_COUNT);
 		size_t n = mSendQueue.try_dequeue_bulk(swapList.begin(), BULK_DEQUEUE_COUNT);
-		for(int i =0; i < n; ++i)
+		int packetCount = static_cast<int>(n);
+		for(int i =0; i < packetCount; ++i)
 		{
 			if(swapList[i] == nullptr)
 				continue;
@@ -313,7 +315,7 @@ void NetworkSession::RegisterSend()
 			mRioSendContext.Length += swapList[i]->WriteSize();
 			mSendBuffer->OnWrite(swapList[i]->WriteSize());
 		}
-		mPacketCount.fetch_sub(n);
+		mPacketCount.fetch_sub(packetCount);
 
 		DWORD sendbytes = 0;
 		DWORD flags = 0;
@@ -469,6 +471,11 @@ void NetworkSession::ProcessSend(int32_t numOfBytes)
 		mSendRegistered.store(false);
 	else
 		RegisterSend();
+}
+
+void NetworkSession::HandleError(int32_t errorCode)
+{
+	errorCode;
 }
 
 const SOCKET& NetworkSession::GetSocket() const

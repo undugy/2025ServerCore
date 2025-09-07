@@ -77,7 +77,12 @@
     <ClCompile Include="DBService.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="PacketHandler.cpp" />
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalQueue.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -162,7 +167,12 @@
     <ClInclude Include="DBService.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="PacketHandler.h" />
+    <ClInclude Include="PacketHandler.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalQueue.h">
+      <Filter>Job</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Log">

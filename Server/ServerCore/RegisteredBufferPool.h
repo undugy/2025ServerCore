@@ -17,7 +17,7 @@ inline TV RoundUp(TV Value, TM Multiple)
 	return(RoundDown(Value, Multiple) + (((Value % Multiple) > 0) ? Multiple : 0));
 }
 
-template<size_t BS>
+template<int32_t BS>
 class RegisteredBufferPool :public RefSingleton<RegisteredBufferPool<BS>>
 {
 	moodycamel::ConcurrentQueue<NetworkBuffer*> mQueue;
@@ -62,11 +62,11 @@ public:
 				continue;
 			}
 
-			mQueue.enqueue(AllocBuffer(id, (BYTE*)pBuffer, BS));
+			mQueue.enqueue(AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS));
 			mAllocCount.fetch_add(1);
-			if (bufferSize != mPendingSize)
+			if (bufferSize != BS)
 			{
-				VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, mPendingSize: %d", bufferSize, mPendingSize);
+				VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, BS: %d", bufferSize, BS);
 			}
 
 			totalBuffersAllocated += receiveBuffersAllocated;
@@ -105,7 +105,7 @@ public:
 				//·Î±ë
 			}
 
-			mQueue.enqueue(AllocBuffer(id, pBuffer, BS));
+			mQueue.enqueue(AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS));
 			mAllocCount.fetch_add(1);
 
 		}
@@ -118,14 +118,14 @@ public:
 		{
 			DWORD bufferSize = 0;
 			DWORD receiveBuffersAllocated = 0;
-			BYTE* pBuffer = AllocateBufferSpace(BS, 1, bufferSize, receiveBuffersAllocated);
+			CHAR* pBuffer = AllocateBufferSpace(BS, 1, bufferSize, receiveBuffersAllocated);
 			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
 			if (id == RIO_INVALID_BUFFERID)
 			{
 				//·Î±ë
 				return nullptr;
 			}
-			pNetBuff = AllocBuffer(id, pBuffer, BS);
+			pNetBuff = AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS);
 			mAllocCount.fetch_add(1);
 			mUseCount.fetch_add(1);
 
@@ -208,7 +208,7 @@ private:
 	}
 
 	template <typename... Args>
-	NetworkBuffer * AllocBuffer(Args&&... args) {
+	NetworkBuffer * AllocBuffer(Args... args) {
 		NetworkBuffer* raw = static_cast<NetworkBuffer*>(mi_malloc(sizeof(NetworkBuffer)));
 		if (!raw) throw std::bad_alloc();
 		new (raw) NetworkBuffer(std::forward<Args>(args)...);

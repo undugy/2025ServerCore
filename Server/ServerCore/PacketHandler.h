@@ -34,13 +34,13 @@ protected:
 
 public:
 	template<class T>
-	std::shared_ptr<Packet> MakeSendBuffer(T& pkt, uint32_t pktId)
+	std::shared_ptr<Packet> MakePacketBuffer(T& pkt, uint32_t pktId)
 	{
 		const uint32_t dataSize = static_cast<uint32_t>(pkt.ByteSizeLong());
 		const uint32_t packetSize = dataSize + sizeof(PacketHeader);
 
 		std::shared_ptr<Packet> packet = PacketManager::GetInstance().Open(packetSize);
-		PacketHeader* header = reinterpret_cast<PacketHeader*>(sendBuffer->Buffer());
+		PacketHeader* header = reinterpret_cast<PacketHeader*>(packet->Buffer());
 		header->size = packetSize;
 		header->id = pktId;
 		ASSERT_CRASH(pkt.SerializeToArray(&header[1], dataSize));

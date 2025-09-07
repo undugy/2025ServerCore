@@ -1,14 +1,14 @@
 #pragma once
 #include"IocpHandler.h"
+#include"IocpContext.h"
+#include"SocketUtil.h"
+#include"NetworkBuffer.h"
 class Service;
 class SendBuffer;
 class IocpContext;
 class NetworkBuffer;
 
 constexpr int32_t OUTSTANDING_COUNT = 16;
-constexpr int32_t PAGE_SIZE = 4096;
-constexpr int32_t RECV_BUFFER_SIZE = PAGE_SIZE * 4;
-constexpr int32_t SEND_BUFFER_SIZE = RECV_BUFFER_SIZE * 2;
 constexpr int32_t BULK_DEQUEUE_COUNT = 500;
 constexpr int32_t WARN_SENDQUEUE_SIZE = 500;
 constexpr int32_t KICK_SENDQUEUE_SIZE = 1000;
