@@ -1,0 +1,37 @@
+#pragma once
+#include "DBService.h"
+
+constexpr uint64_t DBRECONNECTTIME = 5000ll;	// DB 재연결 시간
+
+class DBLoadBalancer
+{
+public:
+	/// <summary>
+	/// DB 연결
+	/// </summary>
+	/// <param name="connectionString">연결을 위한 스트링, 아이디 비밀번호가 필요한 경우 따로 하나 더 만들어야함</param>
+	/// <param name="serviceCount">DB 스레드 개수</param>
+	/// <returns></returns>
+	bool Init(const std::string& connectionString, const int32_t& serviceCount);
+	bool Init(const std::string& driver, const std::string& id, const std::string& pwd, const std::string& db, const std::string& host, const std::string& port, const int32_t& serviceCount);
+	/// <summary>
+	/// 로드밸런싱할 DB 작업 Push
+	/// </summary>
+	/// <param name="workId">밸런싱할 ID</param>
+	/// <param name="protocolId">프로토콜</param>
+	/// <param name="data">DB스레드에 넘길 데이터, DBData를 상속 받은 데이터를 사용</param>
+	/// <param name="handler">작업을 수행할 핸들러</param>
+	/// <returns></returns>
+	bool Push(int32_t workId, uint32_t protocolId, std::shared_ptr<DBData> data, DBHandler& handler);
+	bool Push(std::shared_ptr<DBData> data, DBHandler& handler);
+
+	void Launch();
+
+	DBService& GetDBService(int32_t workId);
+
+private:
+	std::string mConnectionString = "";
+	DBService*	mServiceList = nullptr;	// 배열로 사용
+	int32_t		mServiceCount = 0;
+};
+
