@@ -175,6 +175,8 @@ void NetworkSession::Dispatch(RIONotifyEvent* notifyEvent)
 	for (uint32_t i = 0; i < numResult; i++)
 	{
 		RIOContext* context = reinterpret_cast<RIOContext*>(results[i].RequestContext);
+		if (context == nullptr)
+			continue;
 		std::shared_ptr<IDispatcher> dispatcher = context->mDispatcher;
 		if (dispatcher == nullptr)
 			continue;

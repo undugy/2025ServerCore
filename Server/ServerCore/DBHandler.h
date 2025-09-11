@@ -49,7 +49,7 @@ private:
 	std::unordered_map<uint32_t, DBHandlerFunc> mDBHandlerList;
 
 #ifdef DEV_TEST
-	std::unordered_set<uint16> _useProtocol;	// 중복 체크용
+	std::unordered_set<uint16_t> _useProtocol;	// 중복 체크용
 #endif
 };
 

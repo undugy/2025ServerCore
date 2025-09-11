@@ -44,7 +44,6 @@ public:
 	ServiceType GetServiceType() { return mServiceType; }
 	SocketAddress GetSockAddress() { return mSockAddress; }
 	RIO_CQ& GetRIOCQ(int32_t index);
-	virtual void Dispatch(RIORESULT*result, uint32_t numResult);
 
 	std::shared_ptr<IocpHandler> GetIocpHandler() { return mIocpHandler; }
 	HANDLE GetHandle(); 

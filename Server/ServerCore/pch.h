@@ -9,11 +9,17 @@
 #ifndef PCH_H
 #define PCH_H
 #define VERSION_RIO
-
+#ifndef POCO_STATIC
+#define POCO_STATIC 1
+#endif
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
-#pragma warning(disable : 26498 4819 6386 26800)	  // SPD Log
-#pragma warning (disable: 26439 26498 26451 26444 26451 26812)	// VC++ Code Guidelines warning. POCO 라이브러리가 문제...
-#pragma warning(disable : 4018 6385)
+
+#pragma warning(disable : 26498 4819)	  // spdlog
+#pragma warning (disable: 4244 4245 4100 4127)
+#pragma warning (disable: 4634 4635)	// XML 주석 관련
+#pragma warning (disable: 4389)			// Visual Studio 2022 (vc 143) , signed, unsigned 불일치
+#pragma warning (disable: 26439 26498 26451 26444 26451 26812 4018)	// VC++ Code Guidelines warning. POCO 라이브러리가 문제...
+#pragma warning (disable: 26495 6386 26800)
 // 여기에 미리 컴파일하려는 헤더 추가
 #include <iostream>
 #include <shared_mutex>
@@ -29,12 +35,14 @@
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "mimalloc\\mimalloc.dll.lib")
 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 #pragma comment(lib, "Poco\\PocoDatamd.lib")
 #pragma comment(lib, "Poco\\PocoDataODBCmd.lib")
 #pragma comment(lib, "Poco\\PocoFoundationmd.lib")
-#pragma comment(lib, "Poco\\PocoFoundationmtd.lib")
 #include<modycamel/concurrentqueue.h>
-
+#include"RefSingleton.h"
 #include"ObjectPool.h"
 #include "LogManager.h"
 #include "PocoTimeUtil.h"

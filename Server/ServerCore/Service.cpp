@@ -45,35 +45,6 @@ RIO_CQ& Service::GetRIOCQ(int32_t index)
 	return mRioCQEventList[index % mRioCQEventList.size()]->rioCQ;
 }
 
-void Service::Dispatch(RIORESULT* result, uint32_t numResult)
-{
-
-	//int32_t recvCount = 0;
-	//int32_t sendCount = 0;
-	//int64_t recvSize = 0;
-	//int64_t sendSize = 0;
-	//for (uint32_t i = 0; i < numResult; i++)
-	//{
-	//	RIOContext* context = reinterpret_cast<RIOContext*>(results[i].RequestContext);
-	//	std::shared_ptr<IDispatcher> iocpObject = context->mDispatcher;
-	//	iocpObject->Dispatch(context, results[i].BytesTransferred);
-	//	switch (context->eventType)
-	//	{
-	//	case ContextType::Recv:
-	//		++recvCount;
-	//		recvSize += results[i].BytesTransferred;
-	//		break;
-	//	case ContextType::Send:
-	//		++sendCount;
-	//		sendSize += results[i].BytesTransferred;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
-	//
-}
-
 HANDLE Service::GetHandle()
 {
 	if(mIocpHandler == nullptr)

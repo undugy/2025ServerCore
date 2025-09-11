@@ -88,4 +88,11 @@ protected:
 	virtual int32_t OnRecv([[maybe_unused]] BYTE* buffer, int32_t len) { return len; }
 	virtual void OnSend([[maybe_unused]] int32_t len) {}
 	virtual void OnDisconnected() {}
+
+public:
+	template<typename T>
+	static std::shared_ptr<T> GetSessionConstructor()
+	{
+		return ObjectPool<T>::GetInstance().Acquire();
+	}
 };

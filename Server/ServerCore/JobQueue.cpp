@@ -42,7 +42,7 @@ void JobQueue::Execute()
 			return;
 		}
 
-		const uint64_t now = PocoTimeUtil::GetTick64();
+		const int64_t now = PocoTimeUtil::GetTick64();
 		if (now >= LEndTickCount) // 너무 오래 잡고 있지 말자
 		{
 			LCurrentJobQueue = nullptr;

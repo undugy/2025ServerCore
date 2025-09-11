@@ -72,7 +72,11 @@ class RIOContext : public RIO_BUF
 {
 public:
 	RIOContext(ContextType type) : mContextType(type) {}
-	void Init();
+	void Init() {
+		BufferId = 0;
+		Offset = 0;
+		Length = 0;
+	};
 
 	ContextType mContextType;
 	std::shared_ptr<IDispatcher> mDispatcher;

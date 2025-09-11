@@ -13,9 +13,5 @@ public:
 
 	virtual void Initialize() {};	// 초기화 후 사용하도록
 
-protected:
-	static T mInstance;
 };
 
-template <class T>
-T RefSingleton<T>::mInstance;
