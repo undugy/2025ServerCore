@@ -1,0 +1,29 @@
+{
+  "MainListener": {
+    "ProcessName": "Game",
+    "MaxConnectCount": 5000,
+    "BindPort": 35201,
+    "BindAddress": "0.0.0.0",
+    "NetworkThreadCount": 8
+  },
+
+  "DB": {
+    "GDB": {
+      "UID": "server",
+      "PWD": "PCQ2NzIuNjojZns=",
+      "DATABASE": "Game",
+      "HOST": "192.168.2.61",
+      "PORT": 14335,
+      "THREADS": 4
+    }
+  },
+
+
+  "ObjectPool": {
+    "Packet": 1000,
+    "DBPacket": 1000,
+    "Job": 1000
+  }
+
+
+}

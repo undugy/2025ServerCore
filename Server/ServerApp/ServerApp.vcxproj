@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Output\$(Configuration)\</OutDir>
-    <ExternalIncludePath>$(SolutionDir)ServerCore\;$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(SolutionDir)Libs\$(Configuration)\;$(SolutionDir)Libs\;$(SolutionDir)Libs\mimalloc\;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(SolutionDir)ServerCore\;$(SolutionDir)Include\;$(SolutionDir)Include\mimalloc\;$(SolutionDir)Include\Protobuf\;$(SolutionDir)Common\Protobuf\include\;$(SolutionDir)Common\Protobuf\bin\;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(SolutionDir)Libs\$(Configuration)\;$(SolutionDir)Libs\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Output\$(Configuration)\</OutDir>
@@ -110,20 +110,22 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEV_TEST;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>ServerPch.h</PrecompiledHeaderFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc.dll $(OutDir)mimalloc.dll
+      <Command>call $(SolutionDir)ServeApp\ParseProto.bat if $(ExitCode) neq 0 exit /b
+copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc.dll $(OutDir)mimalloc.dll
 copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll $(OutDir)mimalloc-redirect.dll</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -144,7 +146,48 @@ copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll $(OutDir)mimalloc-r
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="ClientSession.cpp" />
+    <ClCompile Include="ClientSessionManager.cpp" />
+    <ClCompile Include="GameDBHandler.cpp" />
+    <ClCompile Include="GameDBLoadBalancer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Protocol.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ServerApp.cpp" />
+    <ClCompile Include="ServerPch.cpp" />
+    <ClCompile Include="SharedEnum.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SharedStruct.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="ClientSessionManager.h" />
+    <ClInclude Include="GameDBData.h" />
+    <ClInclude Include="GameDBHandler.h" />
+    <ClInclude Include="GameDBLoadBalancer.h" />
+    <ClInclude Include="Protocol.pb.h" />
+    <ClInclude Include="ServerApp.h" />
+    <ClInclude Include="ServerPch.h" />
+    <ClInclude Include="SharedEnum.pb.h" />
+    <ClInclude Include="SharedStruct.pb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServerCore\ServerCore.vcxproj">
+      <Project>{183402f6-0392-4b9a-8f4d-02dd2e63dd6e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ServerConfig.json" />
+    <None Include="SharedEnum.proto" />
+    <None Include="ParseProto.bat" />
+    <None Include="Protocol.proto" />
+    <None Include="SharedStruct.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

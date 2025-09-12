@@ -1,22 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{ab444937-f571-4ee8-945a-656812a5ea77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Client">
+      <UniqueIdentifier>{59e7f660-42c4-4a5f-a173-574188435408}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="ServerApp">
+      <UniqueIdentifier>{836051e3-8bba-48dc-9c40-36e741a3a586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Protobuff">
+      <UniqueIdentifier>{382e53fc-45cc-4bd5-91ee-fe3dfedd2f6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameDB">
+      <UniqueIdentifier>{6e6d7151-5a44-454b-9320-f1de5978ba05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ServerApp.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="ServerPch.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ClientSession.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
+    <ClCompile Include="ServerApp.cpp">
+      <Filter>ServerApp</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="Protocol.pb.cc">
+      <Filter>Packet\Protobuff</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedEnum.pb.cc">
+      <Filter>Packet\Protobuff</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedStruct.pb.cc">
+      <Filter>Packet\Protobuff</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSessionManager.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDBHandler.cpp">
+      <Filter>GameDB</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDBLoadBalancer.cpp">
+      <Filter>GameDB</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ServerPch.h" />
+    <ClInclude Include="ClientSession.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerApp.h">
+      <Filter>ServerApp</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocol.pb.h">
+      <Filter>Packet\Protobuff</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedEnum.pb.h">
+      <Filter>Packet\Protobuff</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedStruct.pb.h">
+      <Filter>Packet\Protobuff</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSessionManager.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDBData.h">
+      <Filter>GameDB</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDBHandler.h">
+      <Filter>GameDB</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDBLoadBalancer.h">
+      <Filter>GameDB</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SharedEnum.proto">
+      <Filter>Packet\Protobuff</Filter>
+    </None>
+    <None Include="ParseProto.bat">
+      <Filter>Packet\Protobuff</Filter>
+    </None>
+    <None Include="Protocol.proto">
+      <Filter>Packet\Protobuff</Filter>
+    </None>
+    <None Include="SharedStruct.proto">
+      <Filter>Packet\Protobuff</Filter>
+    </None>
+    <None Include="ServerConfig.json" />
   </ItemGroup>
 </Project>

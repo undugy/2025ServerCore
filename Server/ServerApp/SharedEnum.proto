@@ -1,0 +1,23 @@
+syntax = "proto3";
+package Protocol;
+
+enum EPacketProtocol
+{
+	PACKET_PROTOCOL_START		= 0;
+
+	CS_ChatRequest				= 1;
+	SC_ChatResponse				= 2;
+
+	CS_BigTestRequest = 3;
+	SC_BigTestResponse = 4;
+
+
+}
+
+enum EDBProtocol
+{
+	DB_PROTOCOL_START			= 0;
+	SGDB_ServerStart			= 1;
+	SGDB_ChatRequest			= 2;
+	GDBS_ChatResponse			= 3;
+}
