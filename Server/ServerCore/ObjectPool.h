@@ -39,8 +39,13 @@ public:
 		return mAllocCount - mPool.size();
 	}
 
+	size_t GetAllocCount()
+	{
+		std::lock_guard<std::recursive_mutex> guard(mLock);
+		return mAllocCount;
+	}
 	template <typename... Args>
-	void Reserve(size_t size, Args... args)
+	void Reserve(size_t size, Args&&... args)
 	{
 		std::lock_guard<std::recursive_mutex> guard(mLock);
 
@@ -55,7 +60,7 @@ public:
 		mAllocCount += size;
 	}
 	template <typename... Args>
-	std::shared_ptr<T> Acquire(Args... args)
+	std::shared_ptr<T> Acquire(Args&&... args)
 	{
 		std::lock_guard<std::recursive_mutex> guard(mLock);
 
@@ -63,10 +68,18 @@ public:
 		{
 			mPool.push(make_mimalloc(std::forward<Args>(args)...));
 			mAllocCount++;
+			std::shared_ptr<T> ptr(
+				mPool.top(),
+				[this](T* obj) { this->Release(obj); }
+			);
+			mPool.pop();
+			return ptr;
 		}
 
+		T* row = mPool.top();
+		new(row)T(std::forward<Args>(args)...);
 		std::shared_ptr<T> ptr(
-			mPool.top(),
+			row,
 			[this](T* obj) { this->Release(obj); }
 		);
 

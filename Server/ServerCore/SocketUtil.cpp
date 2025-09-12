@@ -38,17 +38,17 @@ bool SocketUtil::Init()
 	if (WSAStartup(MAKEWORD(2, 2), OUT & wsaData) != S_OK)
 		return false;
 	SOCKET dummySocket = CreateSocket();
-	if(BindWindowsFunction(dummySocket, WSAID_CONNECTEX, reinterpret_cast<LPVOID*>(&ConnectEx)))
+	if(false == BindWindowsFunction(dummySocket, WSAID_CONNECTEX, reinterpret_cast<LPVOID*>(&ConnectEx)))
 	{
 		Close(dummySocket);
 		return false;
 	}
-	if(BindWindowsFunction(dummySocket, WSAID_DISCONNECTEX, reinterpret_cast<LPVOID*>(&DisconnectEx)))
+	if(false == BindWindowsFunction(dummySocket, WSAID_DISCONNECTEX, reinterpret_cast<LPVOID*>(&DisconnectEx)))
 	{
 		Close(dummySocket);
 		return false;
 	}
-	if(BindWindowsFunction(dummySocket, WSAID_ACCEPTEX, reinterpret_cast<LPVOID*>(&AcceptEx)))
+	if(false == BindWindowsFunction(dummySocket, WSAID_ACCEPTEX, reinterpret_cast<LPVOID*>(&AcceptEx)))
 	{
 		Close(dummySocket);
 		return false;
@@ -56,7 +56,7 @@ bool SocketUtil::Init()
 #ifdef VERSION_RIO
 	GUID guid = WSAID_MULTIPLE_RIO;
 	DWORD bytes = 0;
-	if(WSAIoctl(dummySocket, SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), (void**)&RIOEFTable, sizeof(RIOEFTable), OUT & bytes, NULL, NULL) != SOCKET_ERROR)
+	if(WSAIoctl(dummySocket, SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), (void**)&RIOEFTable, sizeof(RIOEFTable), OUT & bytes, NULL, NULL) == SOCKET_ERROR)
 	{
 		Close(dummySocket);
 		return false;

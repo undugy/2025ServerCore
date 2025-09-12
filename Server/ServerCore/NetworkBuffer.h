@@ -6,12 +6,11 @@ constexpr int32_t SEND_BUFFER_SIZE = RECV_BUFFER_SIZE * 2;
 class NetworkBuffer
 {
 public:
-	NetworkBuffer(const RIO_BUFFERID& rioBuffID ,BYTE* pBuffer, const int32_t& capacity);
+	NetworkBuffer(const RIO_BUFFERID& rioBuffID,int32_t offset ,BYTE* pBuffer, const int32_t& capacity);
 	~NetworkBuffer();
 
 	void Reset();
 	void Clean();
-	void Release();
 	bool OnRead(int32_t numOfBytes);
 	bool OnWrite(int32_t numOfBytes);
 
@@ -22,13 +21,14 @@ public:
 	int32_t WriteOffset() { return mWritePos; }
 
 	RIO_BUFFERID GetRioBufferID() { return mRioBuffID; }
-	
+	int32_t GetRioOffset() { return mOffset; }
 private:
 	int32_t mCapacity = 0;
 	int32_t mReSizePos = 0;
 	int32_t mReadPos = 0;
 	int32_t mWritePos = 0;
 	RIO_BUFFERID mRioBuffID = 0;
+	int32_t mOffset = 0;
 	BYTE* mBuffer = nullptr;
 };
 

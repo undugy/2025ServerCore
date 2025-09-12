@@ -9,6 +9,6 @@ void GlobalQueue::Push(std::shared_ptr<JobQueue> jobQueue)
 std::shared_ptr<JobQueue> GlobalQueue::Pop()
 {
 	std::shared_ptr<JobQueue> jobQueue = nullptr;
-	while (false == mJobQueues.try_dequeue(jobQueue)){};
+	mJobQueues.try_dequeue(jobQueue);
 	return jobQueue;
 }

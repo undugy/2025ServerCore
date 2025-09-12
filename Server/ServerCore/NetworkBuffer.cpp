@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "NetworkBuffer.h"
 #include "SocketUtil.h"
-NetworkBuffer::NetworkBuffer(const RIO_BUFFERID& rioBuffID, BYTE* pBuffer, const int32_t& capacity)
-	: mRioBuffID(rioBuffID), mBuffer(pBuffer), mCapacity(capacity), mReSizePos(capacity / 2)
+#include "CustomBuffer.h"
+NetworkBuffer::NetworkBuffer(const RIO_BUFFERID& rioBuffID, int32_t offset, BYTE* pBuffer, const int32_t& capacity)
+	: mRioBuffID(rioBuffID),mOffset(offset), mBuffer(pBuffer + offset), mCapacity(capacity), mReSizePos(capacity / 2)
 {
 
 }
@@ -16,7 +17,7 @@ void NetworkBuffer::Reset()
 {
 	mReadPos = 0;
 	mWritePos = 0;
-	ZeroMemory(mBuffer, mCapacity);
+
 }
 
 void NetworkBuffer::Clean()
@@ -35,14 +36,6 @@ void NetworkBuffer::Clean()
 			mWritePos = dataSize;
 		}
 	}
-}
-
-void NetworkBuffer::Release()
-{
-	mReadPos = 0;
-	mWritePos = 0;
-	SocketUtil::RIOEFTable.RIODeregisterBuffer(mRioBuffID);
-	VirtualFreeEx(GetCurrentProcess(), mBuffer, 0, MEM_RELEASE);
 }
 
 bool NetworkBuffer::OnRead(int32_t numOfBytes)

@@ -5,7 +5,7 @@ class AcceptContext;
 class Listener : public IDispatcher
 {
 public:
-	Listener() = default;
+	Listener();
 	~Listener();
 
 public:
@@ -25,5 +25,6 @@ protected:
 	SOCKET mSocket = INVALID_SOCKET;
 	std::vector<std::shared_ptr<AcceptContext>> mAcceptEvents;
 	std::shared_ptr<ListenerService> mService;
+
 };
 

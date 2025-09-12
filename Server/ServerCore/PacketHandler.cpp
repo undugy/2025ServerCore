@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "PacketHandler.h"
 
+void PacketHandler::Init()
+{
+
+}
+
 bool PacketHandler::HandlePacket(std::shared_ptr<PacketSession>& session, BYTE* buffer, uint32_t len)
 {
     PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);

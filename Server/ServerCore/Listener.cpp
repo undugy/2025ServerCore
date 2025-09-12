@@ -6,6 +6,10 @@
 #include "IocpContext.h"
 #include "NetworkSession.h"
 #include "NetworkBuffer.h"
+Listener::Listener()
+{
+
+}
 Listener::~Listener()
 {
 	CloseSocket();
@@ -81,8 +85,9 @@ void Listener::RegisterAccept(AcceptContext* acceptContext)
 
 	acceptContext->Init();
 	acceptContext->mDispatcher = session;
+	session->mCustomBuffer.Init(RECV_BUFFER_SIZE);
 	DWORD bytesReceived = 0;
-	if (SocketUtil::AcceptEx(mSocket, session->GetSocket(), session->mRecvBuffer->WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptContext)) == false)
+	if (SocketUtil::AcceptEx(mSocket, session->GetSocket(), session->mCustomBuffer.WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptContext)) == false)
 	{
 		const int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)

@@ -3,10 +3,12 @@
 #include"IocpContext.h"
 #include"SocketUtil.h"
 #include"NetworkBuffer.h"
+#include"CustomBuffer.h"
 class Service;
 class SendBuffer;
 class IocpContext;
 class NetworkBuffer;
+class CustomBuffer;
 
 constexpr int32_t OUTSTANDING_COUNT = 16;
 constexpr int32_t BULK_DEQUEUE_COUNT = 500;
@@ -26,6 +28,7 @@ class NetworkSession : public IDispatcher
 	std::weak_ptr<Service> mService;
 	std::shared_ptr<NetworkBuffer> mRecvBuffer = nullptr;
 	std::shared_ptr<NetworkBuffer> mSendBuffer = nullptr;
+	CustomBuffer mCustomBuffer;
 	moodycamel::ConcurrentQueue<std::shared_ptr<Packet>> mSendQueue;
 	std::atomic_int mPacketCount = 0;
 	std::atomic_bool mSendRegistered = false;

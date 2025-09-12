@@ -19,7 +19,7 @@
 #pragma warning (disable: 4634 4635)	// XML 주석 관련
 #pragma warning (disable: 4389)			// Visual Studio 2022 (vc 143) , signed, unsigned 불일치
 #pragma warning (disable: 26439 26498 26451 26444 26451 26812 4018)	// VC++ Code Guidelines warning. POCO 라이브러리가 문제...
-#pragma warning (disable: 26495 6386 26800)
+#pragma warning (disable: 26495 6385 6386 26800)
 // 여기에 미리 컴파일하려는 헤더 추가
 #include <iostream>
 #include <shared_mutex>
@@ -49,4 +49,5 @@
 #include "LogMacro.h"
 #include "PacketChunk.h"
 #include "ThreadLocal.h"
+#include "IocpHandler.h"
 #endif //PCH_H

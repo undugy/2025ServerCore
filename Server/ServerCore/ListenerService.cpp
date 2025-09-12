@@ -7,7 +7,7 @@
 ListenerService::ListenerService(SocketAddress targetAddress, std::shared_ptr<IocpHandler> iocpHandler, std::function<std::shared_ptr<class NetworkSession>(void)> consturctor, int32_t maxSessionCount)
 	: Service(ServiceType::Connector, targetAddress, iocpHandler, consturctor, maxSessionCount)
 {
-
+	
 }
 
 bool ListenerService::Start()

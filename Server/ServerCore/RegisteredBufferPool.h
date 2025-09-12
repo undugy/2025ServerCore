@@ -24,7 +24,8 @@ class RegisteredBufferPool :public RefSingleton<RegisteredBufferPool<BS>>
 
 	std::atomic_int mAllocCount = 0;
 	std::atomic_int mUseCount = 0;
-
+	RIO_BUFFERID mRioBuffID = RIO_INVALID_BUFFERID;
+	CHAR* mBuffer = nullptr;
 	uint32_t mSize = 0;//ÃÑ °³¼ö
 public:
 	RegisteredBufferPool() = default;
@@ -35,41 +36,38 @@ public:
 		{
 			if (ptr != nullptr)
 			{
-				ptr->Release();
 				mi_free(ptr);
 			}
 		}
+
+		SocketUtil::RIOEFTable.RIODeregisterBuffer(mRioBuffID);
+		VirtualFreeEx(GetCurrentProcess(), mBuffer, 0, MEM_RELEASE);
 	}
 	
 	void Initialize(uint32_t size)
 	{
 		mSize = size;
-
+		DWORD bufferSize = 0;
+		DWORD receiveBuffersAllocated = 0;
 		DWORD totalBuffersAllocated = 0;
-		while (totalBuffersAllocated < mSize)
+		mBuffer = AllocateBufferSpace(BS, mSize, bufferSize, receiveBuffersAllocated);
+		if (bufferSize != BS)
 		{
-			DWORD bufferSize = 0;
-			DWORD receiveBuffersAllocated = 0;
-
-			CHAR* pBuffer = AllocateBufferSpace(BS, mSize, bufferSize, receiveBuffersAllocated);
-
-
-			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
-			if (id == RIO_INVALID_BUFFERID)
-			{
-				VIEW_ERROR("RegisteredBufferPool RIORegisterBuffer Failed");
-				VirtualFreeEx(GetCurrentProcess(), pBuffer, 0, MEM_RELEASE);
-				continue;
-			}
-
-			mQueue.enqueue(AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS));
+			VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, BS: %d", bufferSize, BS);
+		}
+		mRioBuffID = SocketUtil::RIOEFTable.RIORegisterBuffer(mBuffer, static_cast<DWORD>(bufferSize));
+		if (mRioBuffID == RIO_INVALID_BUFFERID)
+		{
+			VIEW_ERROR("RegisteredBufferPool RIORegisterBuffer Failed");
+			VirtualFreeEx(GetCurrentProcess(), mBuffer, 0, MEM_RELEASE);
+			return;
+		}
+		int32_t offset = 0;
+		for (int i = 0; i < mSize; ++i)
+		{
+			offset = i * BS;
+			mQueue.enqueue(AllocBuffer(mRioBuffID, offset, reinterpret_cast<BYTE*>(mBuffer), BS));
 			mAllocCount.fetch_add(1);
-			if (bufferSize != BS)
-			{
-				VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, BS: %d", bufferSize, BS);
-			}
-
-			totalBuffersAllocated += receiveBuffersAllocated;
 		}
 
 
@@ -85,49 +83,38 @@ public:
 		return mAllocCount - mUseCount;
 	}
 
-	template <typename... Args>
-	void Reserve(size_t size, Args... args)
-	{
-		DWORD totalBuffersAllocated = 0;
-		while (totalBuffersAllocated < size)
-		{
-			DWORD bufferSize = 0;
-			DWORD receiveBuffersAllocated = 0;
+	//template <typename... Args>
+	//void Reserve(size_t size, Args... args)
+	//{
+	//	DWORD totalBuffersAllocated = 0;
+	//	for (int i = 0; i < mSize; ++i)
+	//	{
+	//		DWORD bufferSize = 0;
+	//		DWORD receiveBuffersAllocated = 0;
 
-			BYTE* pBuffer = AllocateBufferSpace(BS, size, bufferSize, receiveBuffersAllocated);
+	//		BYTE* pBuffer = AllocateBufferSpace(BS, 1, bufferSize, receiveBuffersAllocated);
 
-			totalBuffersAllocated += receiveBuffersAllocated;
+	//		totalBuffersAllocated += receiveBuffersAllocated;
 
 
-			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
-			if (id == RIO_INVALID_BUFFERID)
-			{
-				//·Î±ë
-			}
+	//		RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
+	//		if (id == RIO_INVALID_BUFFERID)
+	//		{
+	//			//·Î±ë
+	//		}
 
-			mQueue.enqueue(AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS));
-			mAllocCount.fetch_add(1);
+	//		mQueue.enqueue(AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS));
+	//		mAllocCount.fetch_add(1);
 
-		}
-	}
+	//	}
+	//}
 	
 	std::shared_ptr<NetworkBuffer> Acquire()
 	{
 		NetworkBuffer* pNetBuff = nullptr;
 		if (GetFreeCount() <= 0)
 		{
-			DWORD bufferSize = 0;
-			DWORD receiveBuffersAllocated = 0;
-			CHAR* pBuffer = AllocateBufferSpace(BS, 1, bufferSize, receiveBuffersAllocated);
-			RIO_BUFFERID id = SocketUtil::RIOEFTable.RIORegisterBuffer(pBuffer, static_cast<DWORD>(bufferSize));
-			if (id == RIO_INVALID_BUFFERID)
-			{
-				//·Î±ë
-				return nullptr;
-			}
-			pNetBuff = AllocBuffer(id, reinterpret_cast<BYTE*>(pBuffer), BS);
-			mAllocCount.fetch_add(1);
-			mUseCount.fetch_add(1);
+			return nullptr;
 
 		}
 		else

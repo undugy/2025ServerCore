@@ -74,7 +74,7 @@ bool NetworkSession::RegisterRIOBuffer()
 	mRecvBuffer = RegisteredBufferPool<RECV_BUFFER_SIZE>::GetInstance().Acquire();
 	if (mRecvBuffer == nullptr)
 		return false;
-	mSendBuffer = RegisteredBufferPool<SEND_BUFFER_SIZE>::GetInstance().Acquire();;
+	mSendBuffer = RegisteredBufferPool<SEND_BUFFER_SIZE>::GetInstance().Acquire();
 	if (mSendBuffer == nullptr)
 		return false;
 	return true;

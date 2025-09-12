@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LogManager.h"
 #include "ThreadManager.h"
-
+#include <fileSystem>
 LogManager::LogManager()
 {
 
@@ -26,6 +26,7 @@ void LogManager::Initialize(const std::string& loggerName /*= "basic_logger"*/, 
 	{
 		Poco::DateTime now = PocoTimeUtil::GetLocalTime();
 		std::string formattedDate = Poco::DateTimeFormatter::format(now, "%Y-%m-%d") + ".txt";
+		std::filesystem::create_directories(filepath);
 		_logger = spdlog::basic_logger_mt(loggerName, filepath + formattedDate);
 
 		auto localTime = std::chrono::zoned_time(std::chrono::current_zone(), std::chrono::system_clock::now());
@@ -47,6 +48,8 @@ void LogManager::Launch()
 			LogStruct log;
 			while (_logs.try_pop(log) == false)
 			{
+				if(log.log.empty())
+					continue;
 				View(log.time, log.lv, log.log);
 				if (log.write)
 				{

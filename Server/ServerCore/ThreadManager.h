@@ -9,6 +9,8 @@ public:
 	void PushThread(std::function<void(void)> fn);
 	void SetThreadID();
 
+	void DoGlobalJobs();
+	void DistributeJobs();
 private:
 
 	std::vector<std::jthread> _threads;

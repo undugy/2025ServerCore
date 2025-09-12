@@ -12,12 +12,7 @@ bool ServerConfig::LoadConfig(const std::string& configFile)
 	if (ec.value() != 0)
 		return false;	// 에러 났어요...
 
-	std::string strPath = {};
-	strPath += "\\";
-	strPath += configFile;
-	currentDir.append(strPath);
-
-	auto filePath = fs::path(strPath);
+	auto filePath = currentDir / configFile;
 	if (false == fs::exists(filePath, ec))
 		return false;
 	if (false == fs::is_regular_file(filePath, ec))
@@ -29,7 +24,7 @@ bool ServerConfig::LoadConfig(const std::string& configFile)
 
 	mStrConfigFileName = configFile;
 
-	mIsLoaded = _LoadConfig(strPath, fileSize);
+	mIsLoaded = _LoadConfig(configFile, fileSize);
 	_LoadCPUCount();
 	return mIsLoaded;
 }
@@ -67,7 +62,7 @@ bool ServerConfig::_LoadConfig(const std::string& configFile, size_t fileSize)
 	mServerConfigData.MaxConnectCount = mainValue["MaxConnectCount"].GetInt();
 	mServerConfigData.BindPort = mainValue["BindPort"].GetInt();
 	mServerConfigData.NetworkThreadCount = mainValue["NetworkThreadCount"].GetInt();
-	mServerConfigData.BindAddr = mainValue["BindAddr"].GetString();
+	mServerConfigData.BindAddr = mainValue["BindAddress"].GetString();
 
 	//DB 읽기
 	rapidjson::Value& dbValue = doc["DB"];
@@ -79,7 +74,7 @@ bool ServerConfig::_LoadConfig(const std::string& configFile, size_t fileSize)
 		dbConfig.DATABASE = dbValue[itr->name.GetString()]["DATABASE"].GetString();
 		dbConfig.HOST = dbValue[itr->name.GetString()]["HOST"].GetString();
 		dbConfig.PORT = dbValue[itr->name.GetString()]["PORT"].GetInt();
-		dbConfig.THREAD_COUNT = dbValue[itr->name.GetString()]["THREAD_COUNT"].GetInt();
+		dbConfig.THREAD_COUNT = dbValue[itr->name.GetString()]["THREADS"].GetInt();
 		mDBConfigDataMap.insert({ itr->name.GetString(),dbConfig });
 	}
 
@@ -88,6 +83,8 @@ bool ServerConfig::_LoadConfig(const std::string& configFile, size_t fileSize)
 	mObjectPoolConfig.Packet = objectPoolValue["Packet"].GetInt();
 	mObjectPoolConfig.DBPacket = objectPoolValue["DBPacket"].GetInt();
 	mObjectPoolConfig.Job = objectPoolValue["Job"].GetInt();
+
+	_LoadCPUCount();
 	return true;
 }
 

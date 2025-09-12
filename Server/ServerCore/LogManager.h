@@ -52,7 +52,6 @@ private:
 	std::shared_ptr<spdlog::logger> _logger = nullptr;
 	concurrency::concurrent_priority_queue<LogStruct> _logs;
 	std::chrono::seconds _offset = {};
-	std::jthread _threads;
 };
 
 template <class... Args>
@@ -61,6 +60,6 @@ void LogManager::Log(const int64_t& time, const LogType& type, const bool& view,
 	std::string log = std::vformat(fmt, std::make_format_args(args...));
 
 
-	_logs.push({ type, time, log, write});
+	_logs.push(LogStruct{ type, time, log, write});
 
 }

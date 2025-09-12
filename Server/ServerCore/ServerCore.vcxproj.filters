@@ -83,6 +83,10 @@
     <ClCompile Include="GlobalQueue.cpp">
       <Filter>Job</Filter>
     </ClCompile>
+    <ClCompile Include="ServerConfig.cpp" />
+    <ClCompile Include="StrUtil.cpp" />
+    <ClCompile Include="CustomBuffer.cpp" />
+    <ClCompile Include="NetworkStatistics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -173,6 +177,10 @@
     <ClInclude Include="GlobalQueue.h">
       <Filter>Job</Filter>
     </ClInclude>
+    <ClInclude Include="ServerConfig.h" />
+    <ClInclude Include="StrUtil.h" />
+    <ClInclude Include="CustomBuffer.h" />
+    <ClInclude Include="NetworkStatistics.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Log">

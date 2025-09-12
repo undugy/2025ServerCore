@@ -1,6 +1,7 @@
 #pragma once
 #include "PacketSession.h"
 #include "PacketManager.h"
+#include "Packet.h"
 using PacketHandlerFunc = std::function<bool(std::shared_ptr<PacketSession>&, BYTE*, int32_t)>;
 class PacketHandler
 {
@@ -43,14 +44,18 @@ public:
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(packet->Buffer());
 		header->size = packetSize;
 		header->id = pktId;
-		ASSERT_CRASH(pkt.SerializeToArray(&header[1], dataSize));
+		if(false == pkt.SerializeToArray(&header[1], dataSize))
+		{
+			VIEW_ERROR("Packet Serialize Fail");
+			return nullptr;
+		}
 		packet->Close(packetSize);
 
 		return packet;
 	}
 
 private:
-	static std::unordered_map<uint32_t, PacketHandlerFunc> mPacketHandler;
+	std::unordered_map<uint32_t, PacketHandlerFunc> mPacketHandler;
 
 };
 

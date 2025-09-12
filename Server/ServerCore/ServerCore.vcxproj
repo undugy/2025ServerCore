@@ -110,12 +110,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEV_TEST;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +150,7 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" 
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomBuffer.cpp" />
     <ClCompile Include="ConnectService.cpp" />
     <ClCompile Include="DBHandler.cpp" />
     <ClCompile Include="DBLoadBalancer.cpp" />
@@ -164,6 +166,7 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" 
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="NetworkBuffer.cpp" />
     <ClCompile Include="NetworkSession.cpp" />
+    <ClCompile Include="NetworkStatistics.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="PacketChunk.cpp" />
     <ClCompile Include="PacketHandler.cpp" />
@@ -174,13 +177,16 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" 
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Packet.cpp" />
+    <ClCompile Include="ServerConfig.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="SocketUtil.cpp" />
     <ClCompile Include="PocoTimeUtil.cpp" />
+    <ClCompile Include="StrUtil.cpp" />
     <ClCompile Include="ThreadLocal.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomBuffer.h" />
     <ClInclude Include="ConnectService.h" />
     <ClInclude Include="DBHandler.h" />
     <ClInclude Include="DBLoadBalancer.h" />
@@ -197,6 +203,7 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" 
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="NetworkBuffer.h" />
     <ClInclude Include="NetworkSession.h" />
+    <ClInclude Include="NetworkStatistics.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketChunk.h" />
     <ClInclude Include="PacketHandler.h" />
@@ -209,8 +216,10 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" 
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Packet.h" />
+    <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="SocketUtil.h" />
+    <ClInclude Include="StrUtil.h" />
     <ClInclude Include="ThreadLocal.h" />
     <ClInclude Include="ThreadManager.h" />
   </ItemGroup>
