@@ -51,9 +51,9 @@ public:
 		DWORD receiveBuffersAllocated = 0;
 		DWORD totalBuffersAllocated = 0;
 		mBuffer = AllocateBufferSpace(BS, mSize, bufferSize, receiveBuffersAllocated);
-		if (bufferSize != BS)
+		if (bufferSize != BS * size)
 		{
-			VIEW_ERROR("BufferSize is Diffrent bufferSize :%d, BS: %d", bufferSize, BS);
+			VIEW_ERROR("BufferSize is Diffrent bufferSize :{}, BS: {}", bufferSize, BS * size);
 		}
 		mRioBuffID = SocketUtil::RIOEFTable.RIORegisterBuffer(mBuffer, static_cast<DWORD>(bufferSize));
 		if (mRioBuffID == RIO_INVALID_BUFFERID)

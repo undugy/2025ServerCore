@@ -20,10 +20,13 @@ void JobTimer::Distribute(uint64_t now)
 
 	{
 		TimerItem timerItem;
-		while (mTimerQueue.try_pop(timerItem) == false)
+		while (mTimerQueue.try_pop(timerItem) == true)
 		{
 			if (now < timerItem.executeTick)
+			{
+				mTimerQueue.push(std::move(timerItem));
 				break;
+			}
 			items.push_back(timerItem);
 		}
 	}
@@ -43,7 +46,7 @@ void JobTimer::Clear()
 {
 
 	TimerItem timerItem;
-	while (mTimerQueue.try_pop(timerItem) == false)
+	while (mTimerQueue.try_pop(timerItem) == true)
 	{
 
 	}

@@ -84,7 +84,7 @@ void Listener::RegisterAccept(AcceptContext* acceptContext)
 	std::shared_ptr<NetworkSession> session = mService->CreateSession();
 
 	acceptContext->Init();
-	acceptContext->mDispatcher = session;
+	acceptContext->mSession = session;
 	session->mCustomBuffer.Init(RECV_BUFFER_SIZE);
 	DWORD bytesReceived = 0;
 	if (SocketUtil::AcceptEx(mSocket, session->GetSocket(), session->mCustomBuffer.WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptContext)) == false)
@@ -101,7 +101,7 @@ void Listener::ProcessAccept(AcceptContext* acceptContext)
 {
 	if(acceptContext == nullptr)
 		return;
-	std::shared_ptr<NetworkSession> session = std::static_pointer_cast<NetworkSession>(acceptContext->mDispatcher);
+	std::shared_ptr<NetworkSession> session = std::static_pointer_cast<NetworkSession>(acceptContext->mSession);
 
 	if (SocketUtil::SetUpdateAcceptSocket(session->GetSocket(), mSocket) == false)
 	{

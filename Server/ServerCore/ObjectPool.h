@@ -47,59 +47,51 @@ public:
 	template <typename... Args>
 	void Reserve(size_t size, Args&&... args)
 	{
-		std::lock_guard<std::recursive_mutex> guard(mLock);
-
-		for (size_t i = 0; i < size; i++)
+		std::vector<T*> temp;
+		temp.reserve(size);
 		{
-			T* raw = static_cast<T*>(mi_malloc(sizeof(T)));
-			if (!raw) throw std::bad_alloc();
-			new (raw) T(std::forward<Args>(args)...);
-			mPool.push(raw);
+			std::lock_guard<std::recursive_mutex> guard(mLock);
+			for (size_t i = 0; i < size; i++)
+			{
+				T* raw = static_cast<T*>(mi_malloc(sizeof(T)));
+				if (!raw) throw std::bad_alloc();
+				new (raw) T(std::forward<Args>(args)...);
+				temp.push_back(raw);
+			}
 		}
+		for(T* ptr : temp)
+			Release(ptr);
 
 		mAllocCount += size;
 	}
 	template <typename... Args>
 	std::shared_ptr<T> Acquire(Args&&... args)
 	{
-		std::lock_guard<std::recursive_mutex> guard(mLock);
-
-		if (mPool.empty())
-		{
-			mPool.push(make_mimalloc(std::forward<Args>(args)...));
-			mAllocCount++;
-			std::shared_ptr<T> ptr(
-				mPool.top(),
-				[this](T* obj) { this->Release(obj); }
-			);
-			mPool.pop();
-			return ptr;
-		}
-
-		T* row = mPool.top();
-		new(row)T(std::forward<Args>(args)...);
+		T* row = New(std::forward<Args>(args)...);
 		std::shared_ptr<T> ptr(
 			row,
 			[this](T* obj) { this->Release(obj); }
 		);
-
-		mPool.pop();
 		return ptr;
 	}
 
 	template <typename... Args>
 	T* New(Args&&... args)
 	{
+		T* ptr = nullptr;
 		std::lock_guard<std::recursive_mutex> guard(mLock);
-
 		if (mPool.empty())
 		{
-			mPool.push(make_mimalloc(std::forward<Args>(args)...));
+			ptr = make_mimalloc(std::forward<Args>(args)...);
 			mAllocCount++;
 		}
-
-		T* ptr = mPool.top();
-		mPool.pop();
+		else
+		{
+			ptr = mPool.top();
+			new(ptr)T(std::forward<Args>(args)...);
+			mPool.pop();
+		}
+		
 		return ptr;
 	}
 

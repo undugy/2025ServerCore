@@ -4,6 +4,7 @@
 #include "ObjectPool.h"
 #include "IocpHandler.h"
 #include "IocpContext.h"
+#include "ServerConfig.h"
 ListenerService::ListenerService(SocketAddress targetAddress, std::shared_ptr<IocpHandler> iocpHandler, std::function<std::shared_ptr<class NetworkSession>(void)> consturctor, int32_t maxSessionCount)
 	: Service(ServiceType::Connector, targetAddress, iocpHandler, consturctor, maxSessionCount)
 {
@@ -32,8 +33,8 @@ void ListenerService::CloseService()
 bool ListenerService::CreateRIOCQ()
 {
 	constexpr int PendingCount = 32;	// (Send + Recv) OutStandingCount
-	constexpr int MaxClientSize = 5000 * 2;
-	constexpr int CompletionQueueSize = (PendingCount * MaxClientSize);
+	int MaxClientSize = ServerConfig::GetInstance().GetServerConfigData().MaxConnectCount * 2;
+	int CompletionQueueSize = (PendingCount * MaxClientSize);
 
 	std::shared_ptr<RIONotifyEvent> event = ObjectPool<RIONotifyEvent>::GetInstance().Acquire(GetHandle());
 	event->rioCQ = SocketUtil::RIOEFTable.RIOCreateCompletionQueue(CompletionQueueSize, &event->notify);

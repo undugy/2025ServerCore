@@ -17,6 +17,11 @@ public:
 			cs->Send(protocol, pkt);
 	}
 
+	int32_t GetSessionCount()
+	{
+		std::lock_guard<std::recursive_mutex> guard(mSessionLock);
+		return static_cast<int32_t>(_sessions.size());
+	}
 private:
 	std::recursive_mutex mSessionLock;
 	std::unordered_set<std::shared_ptr<ClientSession>> _sessions;

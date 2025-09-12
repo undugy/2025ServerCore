@@ -2,6 +2,7 @@
 #include "ServerApp.h"
 #include "RegisteredBufferPool.h"
 #include "NetworkStatistics.h"
+#include "ClientSessionManager.h"
 bool ServerApp::Init()
 {
 	ThreadManager::GetInstance();	// 메인스레드 ID 생성 위해
@@ -63,6 +64,7 @@ bool ServerApp::InitListener()
 			return false;
 	}
 #endif
+	InitWorkerThread(listenerService);
 	return true;
 }
 
@@ -118,5 +120,6 @@ bool ServerApp::InitObjectPool()
 void TimerJobQueue::UpdateTime()
 {
 	NetworkStatistics::GetInstance().PrintStatistics();
-	DoTimer(100000, &TimerJobQueue::UpdateTime);
+	VIEW_INFO("SessionCount {}", ClientSessionManager::GetInstance().GetSessionCount());
+	DoTimer(60000, &TimerJobQueue::UpdateTime);
 }

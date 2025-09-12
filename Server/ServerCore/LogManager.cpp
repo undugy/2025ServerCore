@@ -10,7 +10,7 @@ LogManager::LogManager()
 LogManager::~LogManager()
 {
 	LogStruct log;
-	while (_logs.try_pop(log) == false)
+	while (_logs.try_pop(log) == true)
 	{
 		View(log.time, log.lv, log.log);
 		if (log.write)
@@ -46,7 +46,7 @@ void LogManager::Launch()
 		while (true)
 		{
 			LogStruct log;
-			while (_logs.try_pop(log) == false)
+			while (_logs.try_pop(log) == true)
 			{
 				if(log.log.empty())
 					continue;

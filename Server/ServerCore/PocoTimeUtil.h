@@ -30,5 +30,7 @@ public:
 	static int64_t PocoTimeToTick(const Poco::DateTime& time);
 	static Poco::DateTime TickToPocoTime(const int64_t& tick);
 
+private:
+	static Poco::DateTime sStartTime;
 };
 

@@ -51,6 +51,7 @@ class AcceptContext : public IocpContext
 {
 public:
 	AcceptContext() : IocpContext(ContextType::Accept) {}
+	std::shared_ptr<IDispatcher> mSession;
 };
 
 class RIONotifyEvent : public IocpContext

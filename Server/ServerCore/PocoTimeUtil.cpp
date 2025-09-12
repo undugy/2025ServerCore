@@ -2,6 +2,8 @@
 #include "PocoTimeUtil.h"
 #include <Poco/Timezone.h>
 #include <chrono>
+Poco::DateTime PocoTimeUtil::sStartTime = PocoTimeUtil::GetLocalTime();
+
 bool PocoTimeUtil::IsZeroTime(const Poco::DateTime& time)
 {
 	return time == GetZeroTime();
@@ -45,8 +47,8 @@ int PocoTimeUtil::GetLocalTimeZone()
 
 int64_t PocoTimeUtil::GetTick64()
 {
-    auto now = std::chrono::system_clock::now();
-    return now.time_since_epoch().count();
+    return sStartTime.timestamp().epochMicroseconds() / 1000 + static_cast<int64_t>(
+        clock());
 }
 
 int64_t PocoTimeUtil::PocoTimeToTick(const Poco::DateTime& time)
