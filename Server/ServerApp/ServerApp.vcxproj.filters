@@ -16,6 +16,9 @@
     <Filter Include="GameDB">
       <UniqueIdentifier>{6e6d7151-5a44-454b-9320-f1de5978ba05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chat">
+      <UniqueIdentifier>{12e0d69d-92b8-4bb3-8ad0-245d6bb89ecb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ServerPch.cpp" />
@@ -46,6 +49,12 @@
     </ClCompile>
     <ClCompile Include="GameDBLoadBalancer.cpp">
       <Filter>GameDB</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatRoomManager.cpp">
+      <Filter>Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatRoom.cpp">
+      <Filter>Chat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="GameDBLoadBalancer.h">
       <Filter>GameDB</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatRoomManager.h">
+      <Filter>Chat</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatRoom.h">
+      <Filter>Chat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

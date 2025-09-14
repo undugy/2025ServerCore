@@ -51,16 +51,14 @@ enum EPacketProtocol : int {
   PACKET_PROTOCOL_START = 0,
   CS_ChatRequest = 1,
   SC_ChatResponse = 2,
-  CS_CircularSectorSkillRequest = 3,
-  SC_CircularSectorSkillResponse = 4,
-  CS_BigTestRequest = 5,
-  SC_BigTestResponse = 6,
+  CS_GetIDRequest = 3,
+  SC_GetIDResponse = 4,
   EPacketProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   EPacketProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool EPacketProtocol_IsValid(int value);
 constexpr EPacketProtocol EPacketProtocol_MIN = PACKET_PROTOCOL_START;
-constexpr EPacketProtocol EPacketProtocol_MAX = SC_BigTestResponse;
+constexpr EPacketProtocol EPacketProtocol_MAX = SC_GetIDResponse;
 constexpr int EPacketProtocol_ARRAYSIZE = EPacketProtocol_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EPacketProtocol_descriptor();

@@ -23,6 +23,7 @@
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/arenastring.h>
+#include <google/protobuf/generated_message_bases.h>
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/metadata_lite.h>
 #include <google/protobuf/generated_message_reflection.h>
@@ -48,32 +49,24 @@ struct TableStruct_Protocol_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto;
 namespace Protocol {
-class CSBigTestRequest;
-struct CSBigTestRequestDefaultTypeInternal;
-extern CSBigTestRequestDefaultTypeInternal _CSBigTestRequest_default_instance_;
 class CSChatRequest;
 struct CSChatRequestDefaultTypeInternal;
 extern CSChatRequestDefaultTypeInternal _CSChatRequest_default_instance_;
-class CSCircularSectorSkillRequest;
-struct CSCircularSectorSkillRequestDefaultTypeInternal;
-extern CSCircularSectorSkillRequestDefaultTypeInternal _CSCircularSectorSkillRequest_default_instance_;
-class SCBigTestResponse;
-struct SCBigTestResponseDefaultTypeInternal;
-extern SCBigTestResponseDefaultTypeInternal _SCBigTestResponse_default_instance_;
+class CSGetIDRequest;
+struct CSGetIDRequestDefaultTypeInternal;
+extern CSGetIDRequestDefaultTypeInternal _CSGetIDRequest_default_instance_;
 class SCChatResponse;
 struct SCChatResponseDefaultTypeInternal;
 extern SCChatResponseDefaultTypeInternal _SCChatResponse_default_instance_;
-class SCCircularSectorSkillResponse;
-struct SCCircularSectorSkillResponseDefaultTypeInternal;
-extern SCCircularSectorSkillResponseDefaultTypeInternal _SCCircularSectorSkillResponse_default_instance_;
+class SCGetIDResponse;
+struct SCGetIDResponseDefaultTypeInternal;
+extern SCGetIDResponseDefaultTypeInternal _SCGetIDResponse_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Protocol::CSBigTestRequest* Arena::CreateMaybeMessage<::Protocol::CSBigTestRequest>(Arena*);
 template<> ::Protocol::CSChatRequest* Arena::CreateMaybeMessage<::Protocol::CSChatRequest>(Arena*);
-template<> ::Protocol::CSCircularSectorSkillRequest* Arena::CreateMaybeMessage<::Protocol::CSCircularSectorSkillRequest>(Arena*);
-template<> ::Protocol::SCBigTestResponse* Arena::CreateMaybeMessage<::Protocol::SCBigTestResponse>(Arena*);
+template<> ::Protocol::CSGetIDRequest* Arena::CreateMaybeMessage<::Protocol::CSGetIDRequest>(Arena*);
 template<> ::Protocol::SCChatResponse* Arena::CreateMaybeMessage<::Protocol::SCChatResponse>(Arena*);
-template<> ::Protocol::SCCircularSectorSkillResponse* Arena::CreateMaybeMessage<::Protocol::SCCircularSectorSkillResponse>(Arena*);
+template<> ::Protocol::SCGetIDResponse* Arena::CreateMaybeMessage<::Protocol::SCGetIDResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
@@ -198,24 +191,10 @@ class CSChatRequest final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 1,
-    kMsgFieldNumber = 2,
+    kMsgFieldNumber = 3,
+    kSessionIDFieldNumber = 2,
   };
-  // string Name = 1;
-  void clear_name();
-  const std::string& name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_name();
-  PROTOBUF_NODISCARD std::string* release_name();
-  void set_allocated_name(std::string* name);
-  private:
-  const std::string& _internal_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
-  public:
-
-  // string Msg = 2;
+  // string Msg = 3;
   void clear_msg();
   const std::string& msg() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -229,6 +208,15 @@ class CSChatRequest final :
   std::string* _internal_mutable_msg();
   public:
 
+  // int32 SessionID = 2;
+  void clear_sessionid();
+  int32_t sessionid() const;
+  void set_sessionid(int32_t value);
+  private:
+  int32_t _internal_sessionid() const;
+  void _internal_set_sessionid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.CSChatRequest)
  private:
   class _Internal;
@@ -236,8 +224,8 @@ class CSChatRequest final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
+  int32_t sessionid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -362,24 +350,10 @@ class SCChatResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 1,
-    kMsgFieldNumber = 2,
+    kMsgFieldNumber = 3,
+    kSessionIDFieldNumber = 2,
   };
-  // string Name = 1;
-  void clear_name();
-  const std::string& name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_name();
-  PROTOBUF_NODISCARD std::string* release_name();
-  void set_allocated_name(std::string* name);
-  private:
-  const std::string& _internal_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
-  public:
-
-  // string Msg = 2;
+  // string Msg = 3;
   void clear_msg();
   const std::string& msg() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -393,6 +367,15 @@ class SCChatResponse final :
   std::string* _internal_mutable_msg();
   public:
 
+  // int32 SessionID = 2;
+  void clear_sessionid();
+  int32_t sessionid() const;
+  void set_sessionid(int32_t value);
+  private:
+  int32_t _internal_sessionid() const;
+  void _internal_set_sessionid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.SCChatResponse)
  private:
   class _Internal;
@@ -400,31 +383,30 @@ class SCChatResponse final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
+  int32_t sessionid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
 // -------------------------------------------------------------------
 
-class CSCircularSectorSkillRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.CSCircularSectorSkillRequest) */ {
+class CSGetIDRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:Protocol.CSGetIDRequest) */ {
  public:
-  inline CSCircularSectorSkillRequest() : CSCircularSectorSkillRequest(nullptr) {}
-  ~CSCircularSectorSkillRequest() override;
-  explicit PROTOBUF_CONSTEXPR CSCircularSectorSkillRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline CSGetIDRequest() : CSGetIDRequest(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR CSGetIDRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  CSCircularSectorSkillRequest(const CSCircularSectorSkillRequest& from);
-  CSCircularSectorSkillRequest(CSCircularSectorSkillRequest&& from) noexcept
-    : CSCircularSectorSkillRequest() {
+  CSGetIDRequest(const CSGetIDRequest& from);
+  CSGetIDRequest(CSGetIDRequest&& from) noexcept
+    : CSGetIDRequest() {
     *this = ::std::move(from);
   }
 
-  inline CSCircularSectorSkillRequest& operator=(const CSCircularSectorSkillRequest& from) {
+  inline CSGetIDRequest& operator=(const CSGetIDRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline CSCircularSectorSkillRequest& operator=(CSCircularSectorSkillRequest&& from) noexcept {
+  inline CSGetIDRequest& operator=(CSGetIDRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -447,20 +429,20 @@ class CSCircularSectorSkillRequest final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const CSCircularSectorSkillRequest& default_instance() {
+  static const CSGetIDRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const CSCircularSectorSkillRequest* internal_default_instance() {
-    return reinterpret_cast<const CSCircularSectorSkillRequest*>(
-               &_CSCircularSectorSkillRequest_default_instance_);
+  static inline const CSGetIDRequest* internal_default_instance() {
+    return reinterpret_cast<const CSGetIDRequest*>(
+               &_CSGetIDRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(CSCircularSectorSkillRequest& a, CSCircularSectorSkillRequest& b) {
+  friend void swap(CSGetIDRequest& a, CSGetIDRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(CSCircularSectorSkillRequest* other) {
+  inline void Swap(CSGetIDRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -473,7 +455,7 @@ class CSCircularSectorSkillRequest final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(CSCircularSectorSkillRequest* other) {
+  void UnsafeArenaSwap(CSGetIDRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -481,38 +463,26 @@ class CSCircularSectorSkillRequest final :
 
   // implements Message ----------------------------------------------
 
-  CSCircularSectorSkillRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CSCircularSectorSkillRequest>(arena);
+  CSGetIDRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CSGetIDRequest>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CSCircularSectorSkillRequest& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const CSCircularSectorSkillRequest& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const CSGetIDRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const CSGetIDRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
+  }
   public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CSCircularSectorSkillRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.CSCircularSectorSkillRequest";
+    return "Protocol.CSGetIDRequest";
   }
   protected:
-  explicit CSCircularSectorSkillRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit CSGetIDRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -525,120 +495,35 @@ class CSCircularSectorSkillRequest final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
-    kMyPosFieldNumber = 3,
-    kForwardFieldNumber = 4,
-    kTargetPosFieldNumber = 5,
-    kThetaFieldNumber = 1,
-    kRadiusFieldNumber = 2,
-  };
-  // .Protocol.SPosition MyPos = 3;
-  bool has_mypos() const;
-  private:
-  bool _internal_has_mypos() const;
-  public:
-  void clear_mypos();
-  const ::Protocol::SPosition& mypos() const;
-  PROTOBUF_NODISCARD ::Protocol::SPosition* release_mypos();
-  ::Protocol::SPosition* mutable_mypos();
-  void set_allocated_mypos(::Protocol::SPosition* mypos);
-  private:
-  const ::Protocol::SPosition& _internal_mypos() const;
-  ::Protocol::SPosition* _internal_mutable_mypos();
-  public:
-  void unsafe_arena_set_allocated_mypos(
-      ::Protocol::SPosition* mypos);
-  ::Protocol::SPosition* unsafe_arena_release_mypos();
-
-  // .Protocol.SPosition Forward = 4;
-  bool has_forward() const;
-  private:
-  bool _internal_has_forward() const;
-  public:
-  void clear_forward();
-  const ::Protocol::SPosition& forward() const;
-  PROTOBUF_NODISCARD ::Protocol::SPosition* release_forward();
-  ::Protocol::SPosition* mutable_forward();
-  void set_allocated_forward(::Protocol::SPosition* forward);
-  private:
-  const ::Protocol::SPosition& _internal_forward() const;
-  ::Protocol::SPosition* _internal_mutable_forward();
-  public:
-  void unsafe_arena_set_allocated_forward(
-      ::Protocol::SPosition* forward);
-  ::Protocol::SPosition* unsafe_arena_release_forward();
-
-  // .Protocol.SPosition TargetPos = 5;
-  bool has_targetpos() const;
-  private:
-  bool _internal_has_targetpos() const;
-  public:
-  void clear_targetpos();
-  const ::Protocol::SPosition& targetpos() const;
-  PROTOBUF_NODISCARD ::Protocol::SPosition* release_targetpos();
-  ::Protocol::SPosition* mutable_targetpos();
-  void set_allocated_targetpos(::Protocol::SPosition* targetpos);
-  private:
-  const ::Protocol::SPosition& _internal_targetpos() const;
-  ::Protocol::SPosition* _internal_mutable_targetpos();
-  public:
-  void unsafe_arena_set_allocated_targetpos(
-      ::Protocol::SPosition* targetpos);
-  ::Protocol::SPosition* unsafe_arena_release_targetpos();
-
-  // float Theta = 1;
-  void clear_theta();
-  float theta() const;
-  void set_theta(float value);
-  private:
-  float _internal_theta() const;
-  void _internal_set_theta(float value);
-  public:
-
-  // float Radius = 2;
-  void clear_radius();
-  float radius() const;
-  void set_radius(float value);
-  private:
-  float _internal_radius() const;
-  void _internal_set_radius(float value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:Protocol.CSCircularSectorSkillRequest)
+  // @@protoc_insertion_point(class_scope:Protocol.CSGetIDRequest)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::Protocol::SPosition* mypos_;
-  ::Protocol::SPosition* forward_;
-  ::Protocol::SPosition* targetpos_;
-  float theta_;
-  float radius_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
 // -------------------------------------------------------------------
 
-class SCCircularSectorSkillResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.SCCircularSectorSkillResponse) */ {
+class SCGetIDResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.SCGetIDResponse) */ {
  public:
-  inline SCCircularSectorSkillResponse() : SCCircularSectorSkillResponse(nullptr) {}
-  ~SCCircularSectorSkillResponse() override;
-  explicit PROTOBUF_CONSTEXPR SCCircularSectorSkillResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline SCGetIDResponse() : SCGetIDResponse(nullptr) {}
+  ~SCGetIDResponse() override;
+  explicit PROTOBUF_CONSTEXPR SCGetIDResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  SCCircularSectorSkillResponse(const SCCircularSectorSkillResponse& from);
-  SCCircularSectorSkillResponse(SCCircularSectorSkillResponse&& from) noexcept
-    : SCCircularSectorSkillResponse() {
+  SCGetIDResponse(const SCGetIDResponse& from);
+  SCGetIDResponse(SCGetIDResponse&& from) noexcept
+    : SCGetIDResponse() {
     *this = ::std::move(from);
   }
 
-  inline SCCircularSectorSkillResponse& operator=(const SCCircularSectorSkillResponse& from) {
+  inline SCGetIDResponse& operator=(const SCGetIDResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline SCCircularSectorSkillResponse& operator=(SCCircularSectorSkillResponse&& from) noexcept {
+  inline SCGetIDResponse& operator=(SCGetIDResponse&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -661,20 +546,20 @@ class SCCircularSectorSkillResponse final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const SCCircularSectorSkillResponse& default_instance() {
+  static const SCGetIDResponse& default_instance() {
     return *internal_default_instance();
   }
-  static inline const SCCircularSectorSkillResponse* internal_default_instance() {
-    return reinterpret_cast<const SCCircularSectorSkillResponse*>(
-               &_SCCircularSectorSkillResponse_default_instance_);
+  static inline const SCGetIDResponse* internal_default_instance() {
+    return reinterpret_cast<const SCGetIDResponse*>(
+               &_SCGetIDResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(SCCircularSectorSkillResponse& a, SCCircularSectorSkillResponse& b) {
+  friend void swap(SCGetIDResponse& a, SCGetIDResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(SCCircularSectorSkillResponse* other) {
+  inline void Swap(SCGetIDResponse* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -687,7 +572,7 @@ class SCCircularSectorSkillResponse final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(SCCircularSectorSkillResponse* other) {
+  void UnsafeArenaSwap(SCGetIDResponse* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -695,13 +580,13 @@ class SCCircularSectorSkillResponse final :
 
   // implements Message ----------------------------------------------
 
-  SCCircularSectorSkillResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<SCCircularSectorSkillResponse>(arena);
+  SCGetIDResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SCGetIDResponse>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const SCCircularSectorSkillResponse& from);
+  void CopyFrom(const SCGetIDResponse& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const SCCircularSectorSkillResponse& from);
+  void MergeFrom(const SCGetIDResponse& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -718,15 +603,15 @@ class SCCircularSectorSkillResponse final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(SCCircularSectorSkillResponse* other);
+  void InternalSwap(SCGetIDResponse* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.SCCircularSectorSkillResponse";
+    return "Protocol.SCGetIDResponse";
   }
   protected:
-  explicit SCCircularSectorSkillResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit SCGetIDResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -740,329 +625,25 @@ class SCCircularSectorSkillResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kIsHitFieldNumber = 1,
+    kSessionIDFieldNumber = 2,
   };
-  // bool IsHit = 1;
-  void clear_ishit();
-  bool ishit() const;
-  void set_ishit(bool value);
+  // int32 SessionID = 2;
+  void clear_sessionid();
+  int32_t sessionid() const;
+  void set_sessionid(int32_t value);
   private:
-  bool _internal_ishit() const;
-  void _internal_set_ishit(bool value);
+  int32_t _internal_sessionid() const;
+  void _internal_set_sessionid(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.SCCircularSectorSkillResponse)
+  // @@protoc_insertion_point(class_scope:Protocol.SCGetIDResponse)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  bool ishit_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_Protocol_2eproto;
-};
-// -------------------------------------------------------------------
-
-class CSBigTestRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.CSBigTestRequest) */ {
- public:
-  inline CSBigTestRequest() : CSBigTestRequest(nullptr) {}
-  ~CSBigTestRequest() override;
-  explicit PROTOBUF_CONSTEXPR CSBigTestRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  CSBigTestRequest(const CSBigTestRequest& from);
-  CSBigTestRequest(CSBigTestRequest&& from) noexcept
-    : CSBigTestRequest() {
-    *this = ::std::move(from);
-  }
-
-  inline CSBigTestRequest& operator=(const CSBigTestRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CSBigTestRequest& operator=(CSBigTestRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CSBigTestRequest& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const CSBigTestRequest* internal_default_instance() {
-    return reinterpret_cast<const CSBigTestRequest*>(
-               &_CSBigTestRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  friend void swap(CSBigTestRequest& a, CSBigTestRequest& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CSBigTestRequest* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CSBigTestRequest* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CSBigTestRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CSBigTestRequest>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CSBigTestRequest& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const CSBigTestRequest& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CSBigTestRequest* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.CSBigTestRequest";
-  }
-  protected:
-  explicit CSBigTestRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kListFieldNumber = 1,
-  };
-  // repeated .Protocol.BigTest List = 1;
-  int list_size() const;
-  private:
-  int _internal_list_size() const;
-  public:
-  void clear_list();
-  ::Protocol::BigTest* mutable_list(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >*
-      mutable_list();
-  private:
-  const ::Protocol::BigTest& _internal_list(int index) const;
-  ::Protocol::BigTest* _internal_add_list();
-  public:
-  const ::Protocol::BigTest& list(int index) const;
-  ::Protocol::BigTest* add_list();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >&
-      list() const;
-
-  // @@protoc_insertion_point(class_scope:Protocol.CSBigTestRequest)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest > list_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_Protocol_2eproto;
-};
-// -------------------------------------------------------------------
-
-class SCBigTestResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.SCBigTestResponse) */ {
- public:
-  inline SCBigTestResponse() : SCBigTestResponse(nullptr) {}
-  ~SCBigTestResponse() override;
-  explicit PROTOBUF_CONSTEXPR SCBigTestResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  SCBigTestResponse(const SCBigTestResponse& from);
-  SCBigTestResponse(SCBigTestResponse&& from) noexcept
-    : SCBigTestResponse() {
-    *this = ::std::move(from);
-  }
-
-  inline SCBigTestResponse& operator=(const SCBigTestResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline SCBigTestResponse& operator=(SCBigTestResponse&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const SCBigTestResponse& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const SCBigTestResponse* internal_default_instance() {
-    return reinterpret_cast<const SCBigTestResponse*>(
-               &_SCBigTestResponse_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    5;
-
-  friend void swap(SCBigTestResponse& a, SCBigTestResponse& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(SCBigTestResponse* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(SCBigTestResponse* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  SCBigTestResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<SCBigTestResponse>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const SCBigTestResponse& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const SCBigTestResponse& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(SCBigTestResponse* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.SCBigTestResponse";
-  }
-  protected:
-  explicit SCBigTestResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kListFieldNumber = 1,
-  };
-  // repeated .Protocol.BigTest List = 1;
-  int list_size() const;
-  private:
-  int _internal_list_size() const;
-  public:
-  void clear_list();
-  ::Protocol::BigTest* mutable_list(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >*
-      mutable_list();
-  private:
-  const ::Protocol::BigTest& _internal_list(int index) const;
-  ::Protocol::BigTest* _internal_add_list();
-  public:
-  const ::Protocol::BigTest& list(int index) const;
-  ::Protocol::BigTest* add_list();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >&
-      list() const;
-
-  // @@protoc_insertion_point(class_scope:Protocol.SCBigTestResponse)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest > list_;
+  int32_t sessionid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -1077,57 +658,27 @@ class SCBigTestResponse final :
 #endif  // __GNUC__
 // CSChatRequest
 
-// string Name = 1;
-inline void CSChatRequest::clear_name() {
-  name_.ClearToEmpty();
+// int32 SessionID = 2;
+inline void CSChatRequest::clear_sessionid() {
+  sessionid_ = 0;
 }
-inline const std::string& CSChatRequest::name() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSChatRequest.Name)
-  return _internal_name();
+inline int32_t CSChatRequest::_internal_sessionid() const {
+  return sessionid_;
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CSChatRequest::set_name(ArgT0&& arg0, ArgT... args) {
- 
- name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.CSChatRequest.Name)
+inline int32_t CSChatRequest::sessionid() const {
+  // @@protoc_insertion_point(field_get:Protocol.CSChatRequest.SessionID)
+  return _internal_sessionid();
 }
-inline std::string* CSChatRequest::mutable_name() {
-  std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:Protocol.CSChatRequest.Name)
-  return _s;
-}
-inline const std::string& CSChatRequest::_internal_name() const {
-  return name_.Get();
-}
-inline void CSChatRequest::_internal_set_name(const std::string& value) {
+inline void CSChatRequest::_internal_set_sessionid(int32_t value) {
   
-  name_.Set(value, GetArenaForAllocation());
+  sessionid_ = value;
 }
-inline std::string* CSChatRequest::_internal_mutable_name() {
-  
-  return name_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CSChatRequest::release_name() {
-  // @@protoc_insertion_point(field_release:Protocol.CSChatRequest.Name)
-  return name_.Release();
-}
-inline void CSChatRequest::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  name_.SetAllocated(name, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (name_.IsDefault()) {
-    name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.CSChatRequest.Name)
+inline void CSChatRequest::set_sessionid(int32_t value) {
+  _internal_set_sessionid(value);
+  // @@protoc_insertion_point(field_set:Protocol.CSChatRequest.SessionID)
 }
 
-// string Msg = 2;
+// string Msg = 3;
 inline void CSChatRequest::clear_msg() {
   msg_.ClearToEmpty();
 }
@@ -1181,57 +732,27 @@ inline void CSChatRequest::set_allocated_msg(std::string* msg) {
 
 // SCChatResponse
 
-// string Name = 1;
-inline void SCChatResponse::clear_name() {
-  name_.ClearToEmpty();
+// int32 SessionID = 2;
+inline void SCChatResponse::clear_sessionid() {
+  sessionid_ = 0;
 }
-inline const std::string& SCChatResponse::name() const {
-  // @@protoc_insertion_point(field_get:Protocol.SCChatResponse.Name)
-  return _internal_name();
+inline int32_t SCChatResponse::_internal_sessionid() const {
+  return sessionid_;
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void SCChatResponse::set_name(ArgT0&& arg0, ArgT... args) {
- 
- name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.SCChatResponse.Name)
+inline int32_t SCChatResponse::sessionid() const {
+  // @@protoc_insertion_point(field_get:Protocol.SCChatResponse.SessionID)
+  return _internal_sessionid();
 }
-inline std::string* SCChatResponse::mutable_name() {
-  std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:Protocol.SCChatResponse.Name)
-  return _s;
-}
-inline const std::string& SCChatResponse::_internal_name() const {
-  return name_.Get();
-}
-inline void SCChatResponse::_internal_set_name(const std::string& value) {
+inline void SCChatResponse::_internal_set_sessionid(int32_t value) {
   
-  name_.Set(value, GetArenaForAllocation());
+  sessionid_ = value;
 }
-inline std::string* SCChatResponse::_internal_mutable_name() {
-  
-  return name_.Mutable(GetArenaForAllocation());
-}
-inline std::string* SCChatResponse::release_name() {
-  // @@protoc_insertion_point(field_release:Protocol.SCChatResponse.Name)
-  return name_.Release();
-}
-inline void SCChatResponse::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  name_.SetAllocated(name, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (name_.IsDefault()) {
-    name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.SCChatResponse.Name)
+inline void SCChatResponse::set_sessionid(int32_t value) {
+  _internal_set_sessionid(value);
+  // @@protoc_insertion_point(field_set:Protocol.SCChatResponse.SessionID)
 }
 
-// string Msg = 2;
+// string Msg = 3;
 inline void SCChatResponse::clear_msg() {
   msg_.ClearToEmpty();
 }
@@ -1283,416 +804,35 @@ inline void SCChatResponse::set_allocated_msg(std::string* msg) {
 
 // -------------------------------------------------------------------
 
-// CSCircularSectorSkillRequest
-
-// float Theta = 1;
-inline void CSCircularSectorSkillRequest::clear_theta() {
-  theta_ = 0;
-}
-inline float CSCircularSectorSkillRequest::_internal_theta() const {
-  return theta_;
-}
-inline float CSCircularSectorSkillRequest::theta() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSCircularSectorSkillRequest.Theta)
-  return _internal_theta();
-}
-inline void CSCircularSectorSkillRequest::_internal_set_theta(float value) {
-  
-  theta_ = value;
-}
-inline void CSCircularSectorSkillRequest::set_theta(float value) {
-  _internal_set_theta(value);
-  // @@protoc_insertion_point(field_set:Protocol.CSCircularSectorSkillRequest.Theta)
-}
-
-// float Radius = 2;
-inline void CSCircularSectorSkillRequest::clear_radius() {
-  radius_ = 0;
-}
-inline float CSCircularSectorSkillRequest::_internal_radius() const {
-  return radius_;
-}
-inline float CSCircularSectorSkillRequest::radius() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSCircularSectorSkillRequest.Radius)
-  return _internal_radius();
-}
-inline void CSCircularSectorSkillRequest::_internal_set_radius(float value) {
-  
-  radius_ = value;
-}
-inline void CSCircularSectorSkillRequest::set_radius(float value) {
-  _internal_set_radius(value);
-  // @@protoc_insertion_point(field_set:Protocol.CSCircularSectorSkillRequest.Radius)
-}
-
-// .Protocol.SPosition MyPos = 3;
-inline bool CSCircularSectorSkillRequest::_internal_has_mypos() const {
-  return this != internal_default_instance() && mypos_ != nullptr;
-}
-inline bool CSCircularSectorSkillRequest::has_mypos() const {
-  return _internal_has_mypos();
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::_internal_mypos() const {
-  const ::Protocol::SPosition* p = mypos_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::SPosition&>(
-      ::Protocol::_SPosition_default_instance_);
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::mypos() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSCircularSectorSkillRequest.MyPos)
-  return _internal_mypos();
-}
-inline void CSCircularSectorSkillRequest::unsafe_arena_set_allocated_mypos(
-    ::Protocol::SPosition* mypos) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(mypos_);
-  }
-  mypos_ = mypos;
-  if (mypos) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.CSCircularSectorSkillRequest.MyPos)
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::release_mypos() {
-  
-  ::Protocol::SPosition* temp = mypos_;
-  mypos_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::unsafe_arena_release_mypos() {
-  // @@protoc_insertion_point(field_release:Protocol.CSCircularSectorSkillRequest.MyPos)
-  
-  ::Protocol::SPosition* temp = mypos_;
-  mypos_ = nullptr;
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::_internal_mutable_mypos() {
-  
-  if (mypos_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::SPosition>(GetArenaForAllocation());
-    mypos_ = p;
-  }
-  return mypos_;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::mutable_mypos() {
-  ::Protocol::SPosition* _msg = _internal_mutable_mypos();
-  // @@protoc_insertion_point(field_mutable:Protocol.CSCircularSectorSkillRequest.MyPos)
-  return _msg;
-}
-inline void CSCircularSectorSkillRequest::set_allocated_mypos(::Protocol::SPosition* mypos) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(mypos_);
-  }
-  if (mypos) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(mypos));
-    if (message_arena != submessage_arena) {
-      mypos = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, mypos, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  mypos_ = mypos;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.CSCircularSectorSkillRequest.MyPos)
-}
-
-// .Protocol.SPosition Forward = 4;
-inline bool CSCircularSectorSkillRequest::_internal_has_forward() const {
-  return this != internal_default_instance() && forward_ != nullptr;
-}
-inline bool CSCircularSectorSkillRequest::has_forward() const {
-  return _internal_has_forward();
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::_internal_forward() const {
-  const ::Protocol::SPosition* p = forward_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::SPosition&>(
-      ::Protocol::_SPosition_default_instance_);
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::forward() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSCircularSectorSkillRequest.Forward)
-  return _internal_forward();
-}
-inline void CSCircularSectorSkillRequest::unsafe_arena_set_allocated_forward(
-    ::Protocol::SPosition* forward) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(forward_);
-  }
-  forward_ = forward;
-  if (forward) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.CSCircularSectorSkillRequest.Forward)
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::release_forward() {
-  
-  ::Protocol::SPosition* temp = forward_;
-  forward_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::unsafe_arena_release_forward() {
-  // @@protoc_insertion_point(field_release:Protocol.CSCircularSectorSkillRequest.Forward)
-  
-  ::Protocol::SPosition* temp = forward_;
-  forward_ = nullptr;
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::_internal_mutable_forward() {
-  
-  if (forward_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::SPosition>(GetArenaForAllocation());
-    forward_ = p;
-  }
-  return forward_;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::mutable_forward() {
-  ::Protocol::SPosition* _msg = _internal_mutable_forward();
-  // @@protoc_insertion_point(field_mutable:Protocol.CSCircularSectorSkillRequest.Forward)
-  return _msg;
-}
-inline void CSCircularSectorSkillRequest::set_allocated_forward(::Protocol::SPosition* forward) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(forward_);
-  }
-  if (forward) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(forward));
-    if (message_arena != submessage_arena) {
-      forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, forward, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  forward_ = forward;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.CSCircularSectorSkillRequest.Forward)
-}
-
-// .Protocol.SPosition TargetPos = 5;
-inline bool CSCircularSectorSkillRequest::_internal_has_targetpos() const {
-  return this != internal_default_instance() && targetpos_ != nullptr;
-}
-inline bool CSCircularSectorSkillRequest::has_targetpos() const {
-  return _internal_has_targetpos();
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::_internal_targetpos() const {
-  const ::Protocol::SPosition* p = targetpos_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::SPosition&>(
-      ::Protocol::_SPosition_default_instance_);
-}
-inline const ::Protocol::SPosition& CSCircularSectorSkillRequest::targetpos() const {
-  // @@protoc_insertion_point(field_get:Protocol.CSCircularSectorSkillRequest.TargetPos)
-  return _internal_targetpos();
-}
-inline void CSCircularSectorSkillRequest::unsafe_arena_set_allocated_targetpos(
-    ::Protocol::SPosition* targetpos) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(targetpos_);
-  }
-  targetpos_ = targetpos;
-  if (targetpos) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.CSCircularSectorSkillRequest.TargetPos)
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::release_targetpos() {
-  
-  ::Protocol::SPosition* temp = targetpos_;
-  targetpos_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::unsafe_arena_release_targetpos() {
-  // @@protoc_insertion_point(field_release:Protocol.CSCircularSectorSkillRequest.TargetPos)
-  
-  ::Protocol::SPosition* temp = targetpos_;
-  targetpos_ = nullptr;
-  return temp;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::_internal_mutable_targetpos() {
-  
-  if (targetpos_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::SPosition>(GetArenaForAllocation());
-    targetpos_ = p;
-  }
-  return targetpos_;
-}
-inline ::Protocol::SPosition* CSCircularSectorSkillRequest::mutable_targetpos() {
-  ::Protocol::SPosition* _msg = _internal_mutable_targetpos();
-  // @@protoc_insertion_point(field_mutable:Protocol.CSCircularSectorSkillRequest.TargetPos)
-  return _msg;
-}
-inline void CSCircularSectorSkillRequest::set_allocated_targetpos(::Protocol::SPosition* targetpos) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(targetpos_);
-  }
-  if (targetpos) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(targetpos));
-    if (message_arena != submessage_arena) {
-      targetpos = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, targetpos, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  targetpos_ = targetpos;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.CSCircularSectorSkillRequest.TargetPos)
-}
+// CSGetIDRequest
 
 // -------------------------------------------------------------------
 
-// SCCircularSectorSkillResponse
+// SCGetIDResponse
 
-// bool IsHit = 1;
-inline void SCCircularSectorSkillResponse::clear_ishit() {
-  ishit_ = false;
+// int32 SessionID = 2;
+inline void SCGetIDResponse::clear_sessionid() {
+  sessionid_ = 0;
 }
-inline bool SCCircularSectorSkillResponse::_internal_ishit() const {
-  return ishit_;
+inline int32_t SCGetIDResponse::_internal_sessionid() const {
+  return sessionid_;
 }
-inline bool SCCircularSectorSkillResponse::ishit() const {
-  // @@protoc_insertion_point(field_get:Protocol.SCCircularSectorSkillResponse.IsHit)
-  return _internal_ishit();
+inline int32_t SCGetIDResponse::sessionid() const {
+  // @@protoc_insertion_point(field_get:Protocol.SCGetIDResponse.SessionID)
+  return _internal_sessionid();
 }
-inline void SCCircularSectorSkillResponse::_internal_set_ishit(bool value) {
+inline void SCGetIDResponse::_internal_set_sessionid(int32_t value) {
   
-  ishit_ = value;
+  sessionid_ = value;
 }
-inline void SCCircularSectorSkillResponse::set_ishit(bool value) {
-  _internal_set_ishit(value);
-  // @@protoc_insertion_point(field_set:Protocol.SCCircularSectorSkillResponse.IsHit)
-}
-
-// -------------------------------------------------------------------
-
-// CSBigTestRequest
-
-// repeated .Protocol.BigTest List = 1;
-inline int CSBigTestRequest::_internal_list_size() const {
-  return list_.size();
-}
-inline int CSBigTestRequest::list_size() const {
-  return _internal_list_size();
-}
-inline ::Protocol::BigTest* CSBigTestRequest::mutable_list(int index) {
-  // @@protoc_insertion_point(field_mutable:Protocol.CSBigTestRequest.List)
-  return list_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >*
-CSBigTestRequest::mutable_list() {
-  // @@protoc_insertion_point(field_mutable_list:Protocol.CSBigTestRequest.List)
-  return &list_;
-}
-inline const ::Protocol::BigTest& CSBigTestRequest::_internal_list(int index) const {
-  return list_.Get(index);
-}
-inline const ::Protocol::BigTest& CSBigTestRequest::list(int index) const {
-  // @@protoc_insertion_point(field_get:Protocol.CSBigTestRequest.List)
-  return _internal_list(index);
-}
-inline ::Protocol::BigTest* CSBigTestRequest::_internal_add_list() {
-  return list_.Add();
-}
-inline ::Protocol::BigTest* CSBigTestRequest::add_list() {
-  ::Protocol::BigTest* _add = _internal_add_list();
-  // @@protoc_insertion_point(field_add:Protocol.CSBigTestRequest.List)
-  return _add;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >&
-CSBigTestRequest::list() const {
-  // @@protoc_insertion_point(field_list:Protocol.CSBigTestRequest.List)
-  return list_;
-}
-
-// -------------------------------------------------------------------
-
-// SCBigTestResponse
-
-// repeated .Protocol.BigTest List = 1;
-inline int SCBigTestResponse::_internal_list_size() const {
-  return list_.size();
-}
-inline int SCBigTestResponse::list_size() const {
-  return _internal_list_size();
-}
-inline ::Protocol::BigTest* SCBigTestResponse::mutable_list(int index) {
-  // @@protoc_insertion_point(field_mutable:Protocol.SCBigTestResponse.List)
-  return list_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >*
-SCBigTestResponse::mutable_list() {
-  // @@protoc_insertion_point(field_mutable_list:Protocol.SCBigTestResponse.List)
-  return &list_;
-}
-inline const ::Protocol::BigTest& SCBigTestResponse::_internal_list(int index) const {
-  return list_.Get(index);
-}
-inline const ::Protocol::BigTest& SCBigTestResponse::list(int index) const {
-  // @@protoc_insertion_point(field_get:Protocol.SCBigTestResponse.List)
-  return _internal_list(index);
-}
-inline ::Protocol::BigTest* SCBigTestResponse::_internal_add_list() {
-  return list_.Add();
-}
-inline ::Protocol::BigTest* SCBigTestResponse::add_list() {
-  ::Protocol::BigTest* _add = _internal_add_list();
-  // @@protoc_insertion_point(field_add:Protocol.SCBigTestResponse.List)
-  return _add;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::BigTest >&
-SCBigTestResponse::list() const {
-  // @@protoc_insertion_point(field_list:Protocol.SCBigTestResponse.List)
-  return list_;
+inline void SCGetIDResponse::set_sessionid(int32_t value) {
+  _internal_set_sessionid(value);
+  // @@protoc_insertion_point(field_set:Protocol.SCGetIDResponse.SessionID)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

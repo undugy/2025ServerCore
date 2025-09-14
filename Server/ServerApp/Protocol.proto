@@ -9,22 +9,23 @@ import "SharedStruct.proto";
 
 message CSChatRequest
 {
-	string Name						= 1;
-	string Msg						= 2;
+	int32 SessionID					= 2;
+	string Msg						= 3;
 }
 
 message SCChatResponse
 {
-	string Name						= 1;
-	string Msg						= 2;
+	int32 SessionID					= 2;
+	string Msg						= 3;
 }
 
-message CSBigTestRequest
+message CSGetIDRequest
 {
-	repeated BigTest List				= 1;
+
 }
 
-message SCBigTestResponse
+message SCGetIDResponse
 {
-	repeated BigTest List				= 1;
+	int32 SessionID					= 2;
 }
+

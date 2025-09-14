@@ -146,6 +146,8 @@ copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll $(OutDir)mimalloc-r
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChatRoom.cpp" />
+    <ClCompile Include="ChatRoomManager.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="ClientSession.cpp" />
     <ClCompile Include="ClientSessionManager.cpp" />
@@ -165,6 +167,8 @@ copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll $(OutDir)mimalloc-r
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChatRoom.h" />
+    <ClInclude Include="ChatRoomManager.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="ClientSessionManager.h" />

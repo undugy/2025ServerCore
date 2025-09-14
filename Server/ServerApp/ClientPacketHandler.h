@@ -5,6 +5,8 @@ class ClientPacketHandler : public PacketHandler, public RefSingleton<ClientPack
 {
 public:
 	void Init() override;
+	bool OnCSChatRequest(std::shared_ptr<PacketSession>& session, CSChatRequest& pkt);
+	bool OnCSGetIDRequest(std::shared_ptr<PacketSession>& session, CSGetIDRequest& pkt);
 private:
 	template<class HandlerType, class PacketType, typename = typename std::enable_if<std::is_base_of<PacketHandler, HandlerType>::value>::type>
 	bool _RegisterHandler(bool (HandlerType::* handler)(std::shared_ptr<PacketSession>&, PacketType&))

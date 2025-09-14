@@ -29,19 +29,17 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_SharedEnum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\020SharedEnum.proto\022\010Protocol*\313\001\n\017EPacket"
+  "\n\020SharedEnum.proto\022\010Protocol*\200\001\n\017EPacket"
   "Protocol\022\031\n\025PACKET_PROTOCOL_START\020\000\022\022\n\016C"
-  "S_ChatRequest\020\001\022\023\n\017SC_ChatResponse\020\002\022!\n\035"
-  "CS_CircularSectorSkillRequest\020\003\022\"\n\036SC_Ci"
-  "rcularSectorSkillResponse\020\004\022\025\n\021CS_BigTes"
-  "tRequest\020\005\022\026\n\022SC_BigTestResponse\020\006*g\n\013ED"
-  "BProtocol\022\025\n\021DB_PROTOCOL_START\020\000\022\024\n\020SGDB"
-  "_ServerStart\020\001\022\024\n\020SGDB_ChatRequest\020\002\022\025\n\021"
-  "GDBS_ChatResponse\020\003b\006proto3"
+  "S_ChatRequest\020\001\022\023\n\017SC_ChatResponse\020\002\022\023\n\017"
+  "CS_GetIDRequest\020\003\022\024\n\020SC_GetIDResponse\020\004*"
+  "g\n\013EDBProtocol\022\025\n\021DB_PROTOCOL_START\020\000\022\024\n"
+  "\020SGDB_ServerStart\020\001\022\024\n\020SGDB_ChatRequest\020"
+  "\002\022\025\n\021GDBS_ChatResponse\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_SharedEnum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_SharedEnum_2eproto = {
-    false, false, 347, descriptor_table_protodef_SharedEnum_2eproto,
+    false, false, 272, descriptor_table_protodef_SharedEnum_2eproto,
     "SharedEnum.proto",
     &descriptor_table_SharedEnum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_SharedEnum_2eproto::offsets,
@@ -66,8 +64,6 @@ bool EPacketProtocol_IsValid(int value) {
     case 2:
     case 3:
     case 4:
-    case 5:
-    case 6:
       return true;
     default:
       return false;

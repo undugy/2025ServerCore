@@ -2,14 +2,17 @@
 #include "ClientSession.h"
 #include "ClientPacketHandler.h"
 #include "ClientSessionManager.h"
+#include "ChatRoomManager.h"
 void ClientSession::OnConnected(const SocketAddress& netAddr)
 {
 	ClientSessionManager::GetInstance().OnConnected(GetPacketSession());
+	ChatRoomManager::GetInstance().GetChatRoom(GetSessionID())->DoAsync(&ChatRoom::Enter, std::static_pointer_cast<ClientSession>(shared_from_this()));
 }
 
 void ClientSession::OnDisconnected()
 {
 	ClientSessionManager::GetInstance().OnDisconnected(GetPacketSession());
+	ChatRoomManager::GetInstance().GetChatRoom(GetSessionID())->DoAsync(&ChatRoom::Leave, std::static_pointer_cast<ClientSession>(shared_from_this()));
 }
 
 void ClientSession::OnRecvPacket(BYTE* buffer, int32_t len)
