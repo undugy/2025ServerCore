@@ -256,7 +256,7 @@ void NetworkSession::RegisterRecv()
 
 	mRioRecvContext.BufferId = mRecvBuffer->GetRioBufferID();
 	mRioRecvContext.Length = mRecvBuffer->FreeSize();
-	mRioRecvContext.Offset = static_cast<uint64_t>(mRecvBuffer->WriteOffset());
+	mRioRecvContext.Offset = static_cast<uint64_t>(mRecvBuffer->GetRioOffset() + mRecvBuffer->WriteOffset());
 
 	DWORD recvbytes = 0;
 	DWORD flags = 0;
@@ -298,7 +298,7 @@ void NetworkSession::RegisterSend()
 		mRioSendContext.Init();
 		mRioSendContext.mDispatcher = shared_from_this();
 		mRioSendContext.BufferId = mSendBuffer->GetRioBufferID();
-		mRioSendContext.Offset = mSendBuffer->WriteOffset();
+		mRioSendContext.Offset = mSendBuffer->GetRioOffset() + mSendBuffer->WriteOffset();
 		std::vector<std::shared_ptr<Packet>> swapList(BULK_DEQUEUE_COUNT);
 		size_t n = mSendQueue.try_dequeue_bulk(swapList.begin(), BULK_DEQUEUE_COUNT);
 		int packetCount = static_cast<int>(n);

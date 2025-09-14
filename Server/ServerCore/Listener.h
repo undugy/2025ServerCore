@@ -16,6 +16,7 @@ public:
 	virtual HANDLE GetHandle() override;
 	virtual void Dispatch(class IocpContext* iocpContext, int32_t numOfBytes = 0) override;
 	virtual void Dispatch(class RIOContext* rioContext, int32_t numOfBytes = 0) override;
+	virtual void Dispatch(class RIONotifyEvent* notifyEvent) override;
 
 private:
 	void RegisterAccept(AcceptContext* acceptContext);

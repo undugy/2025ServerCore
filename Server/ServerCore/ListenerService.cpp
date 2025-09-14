@@ -51,7 +51,7 @@ bool ListenerService::CreateRIOCQ()
 		return false;
 	}
 
-	event->mDispatcher = mListener;
+	event->mService = shared_from_this();
 	mRioCQEventList.push_back(event);
 	return true;
 }

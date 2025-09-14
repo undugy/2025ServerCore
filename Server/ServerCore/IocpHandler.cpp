@@ -27,22 +27,24 @@ bool IocpHandler::ProcessDispatch(uint32_t timeOutMs)
 	{
 		if (iocpContext == nullptr)
 		{
-			//·Î±ë
+			VIEW_ERROR("IocpContext nullptr");
 			return false;
 		}
-		std::shared_ptr<IDispatcher> dispatcher = iocpContext->mDispatcher;
-		if (iocpContext->mDispatcher == nullptr)
-		{
-			//·Î±ë
-			return false;
-		}
+
 #ifdef VERSION_RIO
 		if (key == RIO_IOCP_COMPLETION)
 		{
-			dispatcher->Dispatch(static_cast<RIONotifyEvent*>(iocpContext));
+			std::shared_ptr<Service> service = iocpContext->mService;
+			service->Dispatch(static_cast<RIONotifyEvent*>(iocpContext));
 			return true;
 		}
 #endif
+		std::shared_ptr<IDispatcher> dispatcher = iocpContext->mDispatcher;
+		if (iocpContext->mDispatcher == nullptr)
+		{
+			VIEW_ERROR("Dispatcher nullptr");
+			return false;
+		}
 		dispatcher->Dispatch(iocpContext, transfferedByte);
 	}
 	else
@@ -60,7 +62,8 @@ bool IocpHandler::ProcessDispatch(uint32_t timeOutMs)
 			
 			if (key == RIO_IOCP_COMPLETION)
 			{
-				dispatcher->Dispatch(static_cast<RIONotifyEvent*>(iocpContext));
+				std::shared_ptr<Service> service = iocpContext->mService;
+				service->Dispatch(static_cast<RIONotifyEvent*>(iocpContext));
 				return true;
 			}
 #endif

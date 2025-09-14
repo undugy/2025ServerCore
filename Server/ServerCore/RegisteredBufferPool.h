@@ -51,6 +51,11 @@ public:
 		DWORD receiveBuffersAllocated = 0;
 		DWORD totalBuffersAllocated = 0;
 		mBuffer = AllocateBufferSpace(BS, mSize, bufferSize, receiveBuffersAllocated);
+		if(mBuffer == nullptr)
+		{
+			VIEW_ERROR("RegisteredBufferPool AllocateBufferSpace Failed");
+			return;
+		}
 		if (bufferSize != BS * size)
 		{
 			VIEW_ERROR("BufferSize is Diffrent bufferSize :{}, BS: {}", bufferSize, BS * size);

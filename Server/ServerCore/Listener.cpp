@@ -79,6 +79,11 @@ void Listener::Dispatch([[maybe_unused]] RIOContext* rioContext, [[maybe_unused]
 	VIEW_ERROR("Listener::Dispatch RIOContext Call Error");
 }
 
+void Listener::Dispatch(RIONotifyEvent* notifyEvent)
+{
+	VIEW_ERROR("Listener::Dispatch RIONotifyEvent Call Error");
+}
+
 void Listener::RegisterAccept(AcceptContext* acceptContext)
 {
 	std::shared_ptr<NetworkSession> session = mService->CreateSession();

@@ -22,6 +22,7 @@ public:
 public:
 	ContextType mContextType;
 	std::shared_ptr<IDispatcher> mDispatcher;
+	std::shared_ptr<Service> mService;
 };
 
 class ConnectContext : public IocpContext

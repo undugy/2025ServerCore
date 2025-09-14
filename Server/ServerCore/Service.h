@@ -35,16 +35,16 @@ public:
 	bool CanStart() const { return mSessionConstructor != nullptr; }
 	virtual void CloseService() {};
 
+	void Dispatch(RIONotifyEvent* event);
 	std::shared_ptr<NetworkSession> CreateSession();
 	void AddSession(std::shared_ptr<NetworkSession> session);
 	void ReleaseSession(std::shared_ptr<NetworkSession> session);
 	int32_t GetCurrentSessionCount() { return mSessionCount; }
 	int32_t GetMaxSessionCount() { return mMaxSessionCount; }
-
 	ServiceType GetServiceType() { return mServiceType; }
 	SocketAddress GetSockAddress() { return mSockAddress; }
 	RIO_CQ& GetRIOCQ(int32_t index);
-
+	std::shared_ptr<RIONotifyEvent> GetRIONotify(int32_t index);
 	std::shared_ptr<IocpHandler> GetIocpHandler() { return mIocpHandler; }
 	HANDLE GetHandle(); 
 };

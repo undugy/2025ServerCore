@@ -83,10 +83,18 @@
     <ClCompile Include="GlobalQueue.cpp">
       <Filter>Job</Filter>
     </ClCompile>
-    <ClCompile Include="ServerConfig.cpp" />
-    <ClCompile Include="StrUtil.cpp" />
-    <ClCompile Include="CustomBuffer.cpp" />
-    <ClCompile Include="NetworkStatistics.cpp" />
+    <ClCompile Include="CustomBuffer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkStatistics.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerConfig.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="StrUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -177,10 +185,18 @@
     <ClInclude Include="GlobalQueue.h">
       <Filter>Job</Filter>
     </ClInclude>
-    <ClInclude Include="ServerConfig.h" />
-    <ClInclude Include="StrUtil.h" />
-    <ClInclude Include="CustomBuffer.h" />
-    <ClInclude Include="NetworkStatistics.h" />
+    <ClInclude Include="NetworkStatistics.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomBuffer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="StrUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConfig.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Log">
