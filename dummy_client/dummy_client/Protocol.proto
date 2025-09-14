@@ -1,0 +1,31 @@
+syntax = "proto3";
+package Protocol;
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "Google.Protobuf.Protocol";
+import "SharedEnum.proto";
+import "SharedStruct.proto";
+
+// Protobuffer 3 부터는 기본값 세팅을 지원하지 않음. 패킷의 첫 인자는 무조건 EPacketProtocol로 사용하되 패킷 사용할 때 messageid를 채우는 것을 잊지 말 것
+
+message CSChatRequest
+{
+	int32 SessionID					= 2;
+	string Msg						= 3;
+}
+
+message SCChatResponse
+{
+	int32 SessionID					= 2;
+	string Msg						= 3;
+}
+
+message CSGetIDRequest
+{
+
+}
+
+message SCGetIDResponse
+{
+	int32 SessionID					= 2;
+}
+
