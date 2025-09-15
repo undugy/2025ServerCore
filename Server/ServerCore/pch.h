@@ -8,7 +8,7 @@
 
 #ifndef PCH_H
 #define PCH_H
-#define VERSION_RIO
+//#define VERSION_RIO
 #ifndef POCO_STATIC
 #define POCO_STATIC 1
 #endif

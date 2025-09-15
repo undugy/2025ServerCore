@@ -21,6 +21,7 @@ void NetworkStatistics::PrintStatistics()
 	VIEW_INFO("DB Alloc Count: {}", dbAllocCount);
 	VIEW_INFO("DB Using Count: {}", dbUsingCount);
 
+#ifdef VERSION_RIO
 	auto recvBuffAllocCount = RegisteredBufferPool<RECV_BUFFER_SIZE>::GetInstance().GetFreeCount();
 	auto recvBuffUsingCount = RegisteredBufferPool<RECV_BUFFER_SIZE>::GetInstance().GetUsingCount();
 
@@ -31,4 +32,5 @@ void NetworkStatistics::PrintStatistics()
 	auto sendBuffUsingCount = RegisteredBufferPool<SEND_BUFFER_SIZE>::GetInstance().GetUsingCount();
 	VIEW_INFO("Send Buffer Alloc Count: {}", sendBuffAllocCount);
 	VIEW_INFO("Send Buffer Using Count: {}", sendBuffUsingCount);
+#endif
 }

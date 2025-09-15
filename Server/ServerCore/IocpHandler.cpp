@@ -57,8 +57,8 @@ bool IocpHandler::ProcessDispatch(uint32_t timeOutMs)
 		case ERROR_NETNAME_DELETED:
 		default:
 		{
-#ifdef VERSION_RIO
 			std::shared_ptr<IDispatcher> dispatcher = iocpContext->mDispatcher;
+#ifdef VERSION_RIO
 			
 			if (key == RIO_IOCP_COMPLETION)
 			{

@@ -108,9 +108,10 @@ bool ServerApp::InitObjectPool()
 {
 	auto& objectPoolConfig = ServerConfig::GetInstance().GetObjectPoolConfig();	
 	auto& serverConfig = ServerConfig::GetInstance().GetServerConfigData();
+#ifdef VERSION_RIO
 	RegisteredBufferPool<RECV_BUFFER_SIZE>::GetInstance().Initialize(serverConfig.MaxConnectCount);
 	RegisteredBufferPool<SEND_BUFFER_SIZE>::GetInstance().Initialize(serverConfig.MaxConnectCount);
-
+#endif
 	ObjectPool<Job>::GetInstance().Reserve(objectPoolConfig.Job ,nullptr);
 	ObjectPool<DBQueueData>::GetInstance().Reserve(static_cast<size_t>(objectPoolConfig.DBPacket), 0, nullptr, GameDBHandler::GetInstance());
 

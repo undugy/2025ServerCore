@@ -269,21 +269,21 @@ void NetworkSession::RegisterRecv()
 		mRioRecvContext.mDispatcher = nullptr;
 	}
 #else
-	mRecvEvent.Init();
-	mRecvEvent.mDispatcher = shared_from_this();
+	mRecvContext.Init();
+	mRecvContext.mDispatcher = shared_from_this();
 	WSABUF wsaBuf;
 	wsaBuf.buf = reinterpret_cast<char*>(mRecvBuffer->WritePos());
 	wsaBuf.len = mRecvBuffer->FreeSize();
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
-	if (::WSARecv(mSocket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &mRecvEvent, nullptr) == SOCKET_ERROR)
+	if (::WSARecv(mSocket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &mRecvContext, nullptr) == SOCKET_ERROR)
 	{
 		int32_t errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
-			mRecvEvent.mDispatcher = nullptr;
+			mRecvContext.mDispatcher = nullptr;
 		}
 	}
 #endif
@@ -358,7 +358,7 @@ void NetworkSession::RegisterSend()
 		}
 
 		DWORD numOfBytes = 0;
-		if (WSASend(mSocket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent, nullptr) == SOCKET_ERROR)
+		if (WSASend(mSocket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &mSendContext, nullptr) == SOCKET_ERROR)
 		{
 			int32_t errorCode = ::WSAGetLastError();
 			if (errorCode != WSA_IO_PENDING)
