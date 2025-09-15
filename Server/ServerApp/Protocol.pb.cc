@@ -121,25 +121,17 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016Protocol.proto\022\010Protocol\032\037google/proto"
-  "buf/timestamp.proto\032\020SharedEnum.proto\032\022S"
-  "haredStruct.proto\"/\n\rCSChatRequest\022\021\n\tSe"
-  "ssionID\030\002 \001(\005\022\013\n\003Msg\030\003 \001(\t\"0\n\016SCChatResp"
-  "onse\022\021\n\tSessionID\030\002 \001(\005\022\013\n\003Msg\030\003 \001(\t\"\020\n\016"
-  "CSGetIDRequest\"$\n\017SCGetIDResponse\022\021\n\tSes"
-  "sionID\030\002 \001(\005B\033\252\002\030Google.Protobuf.Protoco"
-  "lb\006proto3"
+  "\n\016Protocol.proto\022\010Protocol\"/\n\rCSChatRequ"
+  "est\022\021\n\tSessionID\030\002 \001(\005\022\013\n\003Msg\030\003 \001(\t\"0\n\016S"
+  "CChatResponse\022\021\n\tSessionID\030\002 \001(\005\022\013\n\003Msg\030"
+  "\003 \001(\t\"\020\n\016CSGetIDRequest\"$\n\017SCGetIDRespon"
+  "se\022\021\n\tSessionID\030\002 \001(\005b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[3] = {
-  &::descriptor_table_SharedEnum_2eproto,
-  &::descriptor_table_SharedStruct_2eproto,
-  &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
-};
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 289, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 189, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 3, 4,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,

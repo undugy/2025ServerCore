@@ -145,8 +145,8 @@ copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimallo
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc.dll" "$(OutDir)mimalloc.dll"
-copy /Y /D "$(SolutionDir)Libs\mimalloc\$(Configuration)\mimalloc-redirect.dll" "$(OutDir)mimalloc-redirect.dll"</Command>
+      <Command>copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc.dll" "$(OutDir)mimalloc.dll"
+copy /Y /D "$(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll" "$(OutDir)mimalloc-redirect.dll"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

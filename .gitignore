@@ -35,7 +35,6 @@
 *.a
 
 # Executables
-*.exe
 *.out
 *.app
 
@@ -435,8 +434,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-#proto
-*pb.h
-*pb.cc
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
