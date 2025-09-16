@@ -24,5 +24,6 @@ message CSGetIDRequest
 message SCGetIDResponse
 {
 	int32 SessionID					= 2;
+	int32 RoomID					= 3;
 }
 

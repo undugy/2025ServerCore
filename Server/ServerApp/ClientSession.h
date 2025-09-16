@@ -3,6 +3,7 @@
 class ClientSession :
     public PacketSession
 {
+	int mRoomID = -1;
 public:
 	ClientSession() {}
 	virtual ~ClientSession() {}
@@ -14,5 +15,7 @@ public:
 
 public:
 	void Send(uint32_t protocol, google::protobuf::Message& pkt);
+	void SetRoomID(int32_t roomID) { mRoomID = roomID; }
+	const int32_t& GetRoomID() const { return mRoomID; }
 };
 

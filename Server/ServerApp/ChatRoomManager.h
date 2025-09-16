@@ -1,6 +1,7 @@
 #pragma once
 #include"ChatRoom.h"
 #include"RefSingleton.h"
+constexpr int32_t MAX_CHATROOM_COUNT = 6;
 class ChatRoomManager : public RefSingleton<ChatRoomManager>
 {
 public:

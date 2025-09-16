@@ -124,7 +124,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>call $(SolutionDir)ServeApp\ParseProto.bat if $(ExitCode) neq 0 exit /b
+      <Command>call $(SolutionDir)ServerApp\ParseProto.bat if $(ExitCode) neq 0 exit /b
 copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc.dll $(OutDir)mimalloc.dll
 copy /y /d $(SolutionDir)Libs\mimalloc\mimalloc-redirect.dll $(OutDir)mimalloc-redirect.dll</Command>
     </PreBuildEvent>

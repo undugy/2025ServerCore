@@ -39,6 +39,7 @@ bool ClientPacketHandler::OnCSGetIDRequest(std::shared_ptr<PacketSession>& sessi
 
 	SCGetIDResponse res;
 	res.set_sessionid(cs->GetSessionID());
+	res.set_roomid(cs->GetRoomID());
 	cs->Send(EPacketProtocol::SC_GetIDResponse, res);
 	return true;
 }

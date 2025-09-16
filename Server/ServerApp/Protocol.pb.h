@@ -623,6 +623,7 @@ class SCGetIDResponse final :
 
   enum : int {
     kSessionIDFieldNumber = 2,
+    kRoomIDFieldNumber = 3,
   };
   // int32 SessionID = 2;
   void clear_sessionid();
@@ -633,6 +634,15 @@ class SCGetIDResponse final :
   void _internal_set_sessionid(int32_t value);
   public:
 
+  // int32 RoomID = 3;
+  void clear_roomid();
+  int32_t roomid() const;
+  void set_roomid(int32_t value);
+  private:
+  int32_t _internal_roomid() const;
+  void _internal_set_roomid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.SCGetIDResponse)
  private:
   class _Internal;
@@ -641,6 +651,7 @@ class SCGetIDResponse final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   int32_t sessionid_;
+  int32_t roomid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -825,6 +836,26 @@ inline void SCGetIDResponse::_internal_set_sessionid(int32_t value) {
 inline void SCGetIDResponse::set_sessionid(int32_t value) {
   _internal_set_sessionid(value);
   // @@protoc_insertion_point(field_set:Protocol.SCGetIDResponse.SessionID)
+}
+
+// int32 RoomID = 3;
+inline void SCGetIDResponse::clear_roomid() {
+  roomid_ = 0;
+}
+inline int32_t SCGetIDResponse::_internal_roomid() const {
+  return roomid_;
+}
+inline int32_t SCGetIDResponse::roomid() const {
+  // @@protoc_insertion_point(field_get:Protocol.SCGetIDResponse.RoomID)
+  return _internal_roomid();
+}
+inline void SCGetIDResponse::_internal_set_roomid(int32_t value) {
+  
+  roomid_ = value;
+}
+inline void SCGetIDResponse::set_roomid(int32_t value) {
+  _internal_set_roomid(value);
+  // @@protoc_insertion_point(field_set:Protocol.SCGetIDResponse.RoomID)
 }
 
 #ifdef __GNUC__

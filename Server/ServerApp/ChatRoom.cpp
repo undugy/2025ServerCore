@@ -17,11 +17,13 @@ ChatRoom::~ChatRoom()
 void ChatRoom::Enter(std::shared_ptr<ClientSession> session)
 {
 	mSessionList.insert_or_assign(session->GetSessionID(), session);
+	session->SetRoomID(mRoomID);
 }
 
 void ChatRoom::Leave(std::shared_ptr<ClientSession> session)
 {
 	mSessionList.erase(session->GetSessionID());
+	session->SetRoomID(-1);
 }
 
 void ChatRoom::Broadcast(uint32_t protocol, google::protobuf::Message& pkt)

@@ -3,11 +3,16 @@
 #include "Job.h"
 #include "DBService.h"
 #include "RegisteredBufferPool.h"
+NetworkStatistics::NetworkStatistics()
+{
+	PdhOpenQuery(NULL, NULL, &_cpuQuery);
+	PdhAddCounterW(_cpuQuery, L"\\Processor(_Total)\\% Processor Time", NULL, &_cpuTotal);
+}
 void NetworkStatistics::PrintStatistics()
 {
 	if (mIsRunning.load() == false)
 		return;
-
+	VIEW_WRITE_INFO("CPU ({:.2f}), MEOMORY ({:.2f})MB", GetCPUUsage(), GetMemoryUsage_MB());
 	auto jobAllocCount = ObjectPool<Job>::GetInstance().GetAllocCount();
 	auto jobUsingCount = ObjectPool<Job>::GetInstance().GetUsingCount();
 
@@ -33,4 +38,30 @@ void NetworkStatistics::PrintStatistics()
 	VIEW_INFO("Send Buffer Alloc Count: {}", sendBuffAllocCount);
 	VIEW_INFO("Send Buffer Using Count: {}", sendBuffUsingCount);
 #endif
+}
+
+const double NetworkStatistics::GetCPUUsage()
+{
+	PdhCollectQueryData(_cpuQuery);
+	PdhGetFormattedCounterValue(_cpuTotal, PDH_FMT_DOUBLE, NULL, &_counterVal);
+	return _counterVal.doubleValue;
+}
+
+const uint64_t NetworkStatistics::GetMemoryUsage_Byte()
+{
+	PROCESS_MEMORY_COUNTERS_EX pmc;
+	if (GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)))
+		return pmc.PrivateUsage;
+
+	return 0;
+}
+
+const double NetworkStatistics::GetMemoryUsage_KB()
+{
+	return static_cast<double>(GetMemoryUsage_Byte()) / 1024.0;
+}
+
+const double NetworkStatistics::GetMemoryUsage_MB()
+{
+	return GetMemoryUsage_KB() / 1024.0;
 }

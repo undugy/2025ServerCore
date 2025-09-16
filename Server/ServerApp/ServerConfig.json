@@ -1,7 +1,7 @@
 {
   "MainListener": {
     "ProcessName": "Game",
-    "MaxConnectCount": 3000,
+    "MaxConnectCount": 10000,
     "BindPort": 35201,
     "BindAddress": "0.0.0.0",
     "NetworkThreadCount": 8
@@ -20,9 +20,9 @@
 
 
   "ObjectPool": {
-    "Packet": 1000,
-    "DBPacket": 1000,
-    "Job": 1000
+    "Packet": 3000,
+    "DBPacket": 3000,
+    "Job": 3000
   }
 
 

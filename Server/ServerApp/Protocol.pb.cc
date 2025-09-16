@@ -60,7 +60,8 @@ struct CSGetIDRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CSGetIDRequestDefaultTypeInternal _CSGetIDRequest_default_instance_;
 PROTOBUF_CONSTEXPR SCGetIDResponse::SCGetIDResponse(
     ::_pbi::ConstantInitialized)
-  : sessionid_(0){}
+  : sessionid_(0)
+  , roomid_(0){}
 struct SCGetIDResponseDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SCGetIDResponseDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -105,6 +106,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::SCGetIDResponse, sessionid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SCGetIDResponse, roomid_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::CSChatRequest)},
@@ -124,12 +126,13 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\016Protocol.proto\022\010Protocol\"/\n\rCSChatRequ"
   "est\022\021\n\tSessionID\030\002 \001(\005\022\013\n\003Msg\030\003 \001(\t\"0\n\016S"
   "CChatResponse\022\021\n\tSessionID\030\002 \001(\005\022\013\n\003Msg\030"
-  "\003 \001(\t\"\020\n\016CSGetIDRequest\"$\n\017SCGetIDRespon"
-  "se\022\021\n\tSessionID\030\002 \001(\005b\006proto3"
+  "\003 \001(\t\"\020\n\016CSGetIDRequest\"4\n\017SCGetIDRespon"
+  "se\022\021\n\tSessionID\030\002 \001(\005\022\016\n\006RoomID\030\003 \001(\005b\006p"
+  "roto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 189, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 205, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -640,12 +643,17 @@ SCGetIDResponse::SCGetIDResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 SCGetIDResponse::SCGetIDResponse(const SCGetIDResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  sessionid_ = from.sessionid_;
+  ::memcpy(&sessionid_, &from.sessionid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&roomid_) -
+    reinterpret_cast<char*>(&sessionid_)) + sizeof(roomid_));
   // @@protoc_insertion_point(copy_constructor:Protocol.SCGetIDResponse)
 }
 
 inline void SCGetIDResponse::SharedCtor() {
-sessionid_ = 0;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&sessionid_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&roomid_) -
+    reinterpret_cast<char*>(&sessionid_)) + sizeof(roomid_));
 }
 
 SCGetIDResponse::~SCGetIDResponse() {
@@ -671,7 +679,9 @@ void SCGetIDResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  sessionid_ = 0;
+  ::memset(&sessionid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&roomid_) -
+      reinterpret_cast<char*>(&sessionid_)) + sizeof(roomid_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -685,6 +695,14 @@ const char* SCGetIDResponse::_InternalParse(const char* ptr, ::_pbi::ParseContex
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           sessionid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 RoomID = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          roomid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -724,6 +742,12 @@ uint8_t* SCGetIDResponse::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_sessionid(), target);
   }
 
+  // int32 RoomID = 3;
+  if (this->_internal_roomid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_roomid(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -743,6 +767,11 @@ size_t SCGetIDResponse::ByteSizeLong() const {
   // int32 SessionID = 2;
   if (this->_internal_sessionid() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_sessionid());
+  }
+
+  // int32 RoomID = 3;
+  if (this->_internal_roomid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_roomid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -770,6 +799,9 @@ void SCGetIDResponse::MergeFrom(const SCGetIDResponse& from) {
   if (from._internal_sessionid() != 0) {
     _internal_set_sessionid(from._internal_sessionid());
   }
+  if (from._internal_roomid() != 0) {
+    _internal_set_roomid(from._internal_roomid());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -787,7 +819,12 @@ bool SCGetIDResponse::IsInitialized() const {
 void SCGetIDResponse::InternalSwap(SCGetIDResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(sessionid_, other->sessionid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SCGetIDResponse, roomid_)
+      + sizeof(SCGetIDResponse::roomid_)
+      - PROTOBUF_FIELD_OFFSET(SCGetIDResponse, sessionid_)>(
+          reinterpret_cast<char*>(&sessionid_),
+          reinterpret_cast<char*>(&other->sessionid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SCGetIDResponse::GetMetadata() const {

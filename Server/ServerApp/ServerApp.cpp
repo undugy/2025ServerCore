@@ -122,5 +122,5 @@ void TimerJobQueue::UpdateTime()
 {
 	NetworkStatistics::GetInstance().PrintStatistics();
 	VIEW_INFO("SessionCount {}", ClientSessionManager::GetInstance().GetSessionCount());
-	DoTimer(60000, &TimerJobQueue::UpdateTime);
+	DoTimer(30000, &TimerJobQueue::UpdateTime);
 }

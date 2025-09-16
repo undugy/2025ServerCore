@@ -27,7 +27,8 @@ void ClientSession::OnRecvPacket(BYTE* buffer, int32_t len)
 
 void ClientSession::OnSend([[maybe_unused]]int32_t len)
 {
-
+	if(len <= 0)
+		VIEW_ERROR("Send 0byte");
 }
 
 void ClientSession::Send(uint32_t protocol, google::protobuf::Message& pkt)
