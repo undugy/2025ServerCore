@@ -13,7 +13,7 @@
 #include <queue>
 #include <array>
 #include <memory>
-
+#include"render.h"
 using namespace std;
 using namespace chrono;
 
@@ -25,6 +25,7 @@ const static int INVALID_ID = -1;
 const static int MAX_PACKET_SIZE = 2048;
 const static int MAX_BUFF_SIZE = 2048;
 const static int MAX_NAME_SIZE = 255;
+
 
 #pragma comment (lib, "ws2_32.lib")
 #pragma comment(lib, "Protobuf\\libprotobuf.lib")
@@ -55,8 +56,7 @@ public:
 };
 struct CLIENT {
 	int id;
-	int x;
-	int y;
+	int roomid;
 	char name[MAX_NAME_SIZE];
 	std::string msg;
 	atomic_bool connected;
@@ -68,13 +68,16 @@ struct CLIENT {
 	high_resolution_clock::time_point last_move_time;
 };
 
+
+
 array<int, MAX_CLIENTS> client_map;
 array<CLIENT, MAX_CLIENTS> g_clients;
+
 atomic_int num_connections;
 atomic_int client_to_close;
 atomic_int active_clients;
 
-int			global_delay;				// ms단위, 1000이 넘으면 클라이언트 증가 종료
+int64_t			global_delay;				// ms단위, 1000이 넘으면 클라이언트 증가 종료
 
 vector <thread*> worker_threads;
 thread test_thread;
@@ -87,6 +90,7 @@ struct ALIEN {
 	int x, y;
 	int visible_count;
 };
+
 
 
 
@@ -111,6 +115,7 @@ void DisconnectClient(int ci)
 {
 	bool status = true;
 	if (true == atomic_compare_exchange_strong(&g_clients[ci].connected, &status, false)) {
+		g_rooms[g_clients[ci].roomid].participants--;
 		closesocket(g_clients[ci].client_socket);
 		active_clients--;
 	}
@@ -162,10 +167,10 @@ void ProcessPacket(int ci, unsigned char packet[])
 				}
 				if (ci == my_id) {
 					auto now = high_resolution_clock::now();
-					auto d_ms = duration_cast<milliseconds>(now.time_since_epoch()).count() - duration_cast<milliseconds>(g_clients[my_id].last_move_time.time_since_epoch()).count();
+					auto d_ms = duration_cast<milliseconds>(now.time_since_epoch()) - duration_cast<milliseconds>(g_clients[my_id].last_move_time.time_since_epoch());
 
-					if (global_delay < d_ms) global_delay++;
-					else if (global_delay > d_ms) global_delay--;
+					if (global_delay < d_ms.count()) global_delay++;
+					else if (global_delay > d_ms.count()) global_delay--;
 
 				}
 			}
@@ -175,10 +180,12 @@ void ProcessPacket(int ci, unsigned char packet[])
 	{
 		SCGetIDResponse pkt;
 		g_clients[ci].connected = true;
+		g_clients[ci].roomid = pkt.roomid();
 		active_clients++;
 
 		int my_id = ci;
 		client_map[pkt.sessionid()] = my_id;
+		g_rooms[pkt.roomid()].participants++;
 	}
 	break;
 	default: MessageBox(hWnd, L"Unknown Packet Type", L"ERROR", 0);
@@ -235,6 +242,7 @@ void Worker_Thread()
 			}
 			g_clients[ci].curr_packet_size = psize;
 			g_clients[ci].prev_packet_data = pr_size;
+			g_rooms[g_clients[client_id].roomid].totalRecv += io_size;
 			DWORD recv_flag = 0;
 			int ret = WSARecv(g_clients[ci].client_socket,
 				&g_clients[ci].recv_over.wsabuf, 1,
@@ -253,6 +261,7 @@ void Worker_Thread()
 				// std::cout << "Send Incomplete Error!\n";
 				DisconnectClient(client_id);
 			}
+			g_rooms[g_clients[client_id].roomid].totalSent += io_size;
 			delete over;
 		}
 		else if (OP_DO_MOVE == over->event_type) {
@@ -283,7 +292,7 @@ void Adjust_Number_Of_Client()
 	auto duration = high_resolution_clock::now() - last_connect_time;
 	if (ACCEPT_DELY * delay_multiplier > duration_cast<milliseconds>(duration).count()) return;
 
-	int t_delay = global_delay;
+	int64_t t_delay = global_delay;
 	if (DELAY_LIMIT2 < t_delay) {
 		if (true == increasing) {
 			max_limit = active_clients;
@@ -310,7 +319,7 @@ void Adjust_Number_Of_Client()
 	SOCKADDR_IN ServerAddr;
 	ZeroMemory(&ServerAddr, sizeof(SOCKADDR_IN));
 	ServerAddr.sin_family = AF_INET;
-	ServerAddr.sin_port = htons(35201);
+	ServerAddr.sin_port = htons(9999);
 	ServerAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	
 
@@ -372,6 +381,9 @@ void InitializeNetwork()
 	}
 
 	for (auto& cl : client_map) cl = -1;
+	int i = 0;
+	for (auto& room : g_rooms) room.roomId = i++;
+
 	num_connections = 0;
 	last_connect_time = high_resolution_clock::now();
 
@@ -398,20 +410,6 @@ void ShutdownNetwork()
 void Do_Network()
 {
 	return;
-}
-
-void GetPointCloud(int* size, float** points)
-{
-	int index = 0;
-	for (int i = 0; i < num_connections; ++i)
-		if (true == g_clients[i].connected) {
-			point_cloud[index * 2] = static_cast<float>(g_clients[i].x);
-			point_cloud[index * 2 + 1] = static_cast<float>(g_clients[i].y);
-			index++;
-		}
-
-	*size = index;
-	*points = point_cloud;
 }
 
 void GetMsgCloud(std::vector<std::string>&msgVec)

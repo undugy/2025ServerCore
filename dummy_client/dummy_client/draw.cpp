@@ -17,13 +17,14 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <array>
 //#include <gl\glaux.h>		// Header File For The Glaux Library
 
 #pragma comment (lib, "opengl32.lib")
 #pragma comment (lib, "glu32.lib")
 
 #include "dummy.h"
-
+#include "render.h"
 HDC			hDC = NULL;		// Private GDI Device Context
 HGLRC		hRC = NULL;		// Permanent Rendering Context
 HWND		hWnd = NULL;		// Holds Our Window Handle
@@ -36,8 +37,50 @@ GLfloat	cnt2;				// 2nd Counter Used To Move Text & For Coloring
 bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active = TRUE;		// Window Active Flag Set To TRUE By Default
 bool	fullscreen = TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
-
+struct Rect { int x, y, w, h; };
+std::array<RoomStats, MAX_ROOM_SIZE> g_rooms;
+std::array<TrafficCounter, MAX_ROOM_SIZE> g_counters;
+//constexpr int MAX_ROOM_SIZE = 6;
+void RenderAllRooms(int windowW, int windowH);
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
+void UpdateBpsFromTotals(double dtSec);
+void BeginPanel2D(const Rect& r, int windowH);
+void EndPanel2D();
+void DrawFilledRect(float x, float y, float w, float h) {
+	glBegin(GL_QUADS);
+	glVertex2f(x, y);
+	glVertex2f(x + w, y);
+	glVertex2f(x + w, y + h);
+	glVertex2f(x, y + h);
+	glEnd();
+}
+
+void DrawRectOutline(float x, float y, float w, float h, float line = 1.0f) {
+	glLineWidth(line);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(x, y);
+	glVertex2f(x + w, y);
+	glVertex2f(x + w, y + h);
+	glVertex2f(x, y + h);
+	glEnd();
+}
+
+// 바 하나 (0~1 비율)
+void DrawBar(float x, float y, float w, float h, float ratio) {
+	ratio = max(0.f, min(1.f, ratio));
+	// 배경
+	glColor3f(0.15f, 0.15f, 0.15f);
+	DrawFilledRect(x, y, w, h);
+	glColor3f(1, 1, 1);
+	DrawRectOutline(x, y, w, h);
+
+	// 값
+	glColor3f(0.2f, 0.7f, 0.2f);
+	DrawFilledRect(x, y, w * ratio, h);
+}
+
+// bps를 시각화하려고 임계치(예: 10 MB/s)를 가정해 bar 비율로 노멀라이즈
+static const double MAX_BPS = 10.0 * 1024 * 1024; // 10 MB/s
 
 GLvoid BuildFont(GLvoid)								// Build Our Bitmap Font
 {
@@ -129,8 +172,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 	int size = 0;
-	float* points = nullptr;
-	GetPointCloud(&size, &points);
 	std::vector<std::string> msgs;
 	GetMsgCloud(msgs);
 
@@ -159,11 +200,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 		glVertex3f(x, y, z);
 	}
 	glEnd();*/
-
-	for(auto& msg : msgs) {
-		glRasterPos2f(0.0f, -0.1f - 0.05f * (&msg - &msgs[0]));
-		glPrint(msg.c_str());
-	}
+	RenderAllRooms(1280, 960);
 	return TRUE;										// Everything Went OK
 }
 
@@ -443,10 +480,10 @@ LRESULT CALLBACK WndProc(HWND	hWnd,			// Handle For This Window
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
-	HINSTANCE	hPrevInstance,		// Previous Instance
-	LPSTR		lpCmdLine,			// Command Line Parameters
-	int			nCmdShow)			// Window Show State
+int WINAPI wWinMain(HINSTANCE,
+	HINSTANCE,
+	PWSTR,
+	int)
 {
 	MSG		msg;									// Windows Message Structure
 	BOOL	done = FALSE;								// Bool Variable To Exit Loop
@@ -454,7 +491,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	fullscreen = FALSE;							// Windowed Mode
 
 	// Create Our OpenGL Window
-	if (!CreateGLWindow(L"Stress Test Client", 640, 480, 16, fullscreen))
+	if (!CreateGLWindow(L"Stress Test Client", 1280, 960, 16, fullscreen))
 	{
 		return 0;									// Quit If Window Was Not Created
 	}
@@ -493,7 +530,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 				KillGLWindow();						// Kill Our Current Window
 				fullscreen = !fullscreen;				// Toggle Fullscreen / Windowed Mode
 														// Recreate Our OpenGL Window
-				if (!CreateGLWindow(L"NeHe's Bitmap Font Tutorial", 640, 480, 16, fullscreen))
+				if (!CreateGLWindow(L"NeHe's Bitmap Font Tutorial", 1280, 960, 16, fullscreen))
 				{
 					return 0;						// Quit If Window Was Not Created
 				}
@@ -504,4 +541,128 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	// Shutdown
 	KillGLWindow();									// Kill The Window
 	return ((int)msg.wParam);							// Exit The Program
+}
+
+
+
+
+void BeginPanel2D(const Rect& r, int windowH) {
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(r.x, windowH - (r.y + r.h), r.w, r.h); // OpenGL scissor는 좌하 기준
+	glViewport(r.x, windowH - (r.y + r.h), r.w, r.h);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	// 좌상(0,0)에서 우하(w,h)로 쓰고 싶으면 y축 뒤집기 없이 이렇게:
+	gluOrtho2D(0, r.w, r.h, 0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+}
+
+void EndPanel2D() {
+	glEnable(GL_DEPTH_TEST);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glDisable(GL_SCISSOR_TEST);
+}
+
+
+void RenderRoomPanel(const RoomStats& rs, const Rect& r, int windowH) {
+	BeginPanel2D(r, windowH);
+
+	// 배경 카드
+	glColor3f(0.08f, 0.08f, 0.1f);
+	DrawFilledRect(0, 0, (float)r.w, (float)r.h);
+	glColor3f(0.35f, 0.35f, 0.4f);
+	DrawRectOutline(0, 0, (float)r.w, (float)r.h, 1.0f);
+
+	// 텍스트 여백
+	float px = 12.f, py = 22.f, lh = 18.f;
+
+	glColor3f(1, 1, 0);
+	glRasterPos2f(px, py);
+	glPrint("Room: %d", rs.roomId.load());
+
+	glColor3f(1, 1, 1);
+	glRasterPos2f(px, py + lh);
+	glPrint("Participants : %d", rs.participants.load());
+
+	glRasterPos2f(px, py + lh * 2);
+	glPrint("Sent (total) : %.2f MB", rs.totalSent.load() / (1024.0 * 1024.0));
+	glRasterPos2f(px, py + lh * 3);
+	glPrint("Recv (total) : %.2f MB", rs.totalRecv.load() / (1024.0 * 1024.0));
+
+	glRasterPos2f(px, py + lh * 4);
+	glPrint("Sent (bps)   : %.2f MB/s", rs.sentBps / (1024.0 * 1024.0));
+	glRasterPos2f(px, py + lh * 5);
+	glPrint("Recv (bps)   : %.2f MB/s", rs.recvBps / (1024.0 * 1024.0));
+
+	// 바 시각화
+	float barX = px, barY = py + lh * 6 + 8.f;
+	float barW = r.w - px * 2, barH = 10.f;
+
+	// Sent bar
+	DrawBar(barX, barY, barW, barH, (float)min(1.0, rs.sentBps / MAX_BPS));
+	glColor3f(1, 1, 1);
+	glRasterPos2f(barX, barY - 4.f);
+	glPrint("Sent");
+
+	// Recv bar
+	DrawBar(barX, barY + barH + 10.f, barW, barH, (float)min(1.0, rs.recvBps / MAX_BPS));
+	glColor3f(1, 1, 1);
+	glRasterPos2f(barX, barY + barH + 10.f - 4.f);
+	glPrint("Recv");
+
+	EndPanel2D();
+}
+
+void RenderAllRooms(int windowW, int windowH) {
+	const int cols = 3;
+	const int rows = 2;
+	int panelW = windowW / cols;
+	int panelH = windowH / rows;
+
+	for (int i = 0; i < 6; ++i) {
+		int cx = i % cols;
+		int cy = i / cols;     // 0=상단,1=하단(위/아래 좌표계 주의)
+		Rect r;
+		r.x = cx * panelW;
+		r.y = cy * panelH;
+		r.w = panelW;
+		r.h = panelH;
+
+		RenderRoomPanel(g_rooms[i], r, windowH);
+	}
+}
+
+void UpdateBpsFromTotals(double dtSec) {
+	// dtSec ~= 1.0 권장
+	const double alpha = 0.3; // EMA 계수
+	for (int i = 0; i < 6; ++i) {
+		auto& rs = g_rooms[i];
+		auto& tc = g_counters[i];
+		int64_t dS = (rs.totalSent >= tc.lastTotalSent) ? (rs.totalSent - tc.lastTotalSent) : 0;
+		int64_t dR = (rs.totalRecv >= tc.lastTotalRecv) ? (rs.totalRecv - tc.lastTotalRecv) : 0;
+
+		double instSent = dtSec > 0 ? (double)dS / dtSec : 0.0;
+		double instRecv = dtSec > 0 ? (double)dR / dtSec : 0.0;
+
+		tc.emaSent = alpha * instSent + (1.0 - alpha) * tc.emaSent;
+		tc.emaRecv = alpha * instRecv + (1.0 - alpha) * tc.emaRecv;
+
+		rs.sentBps = tc.emaSent;
+		rs.recvBps = tc.emaRecv;
+
+		tc.lastTotalSent = rs.totalSent;
+		tc.lastTotalRecv = rs.totalRecv;
+	}
 }
